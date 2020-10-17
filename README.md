@@ -1,12 +1,13 @@
-Project Name : Digital Signage Based User Targeted Advertising
+# Project Name : Digital Signage Based User Targeted Advertising
 
 Group Members : E/16/083   -  e16083@eng.pdn.ac.lk
                 E/16/368   -  e16368@eng.pdn.ac.lk
                 E/16/200   -  e16200@eng.pdn.ac.lk
                 
 
-# Digital signage based user targeted advertising
+## Introduction
 
+![image](https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising/blob/main/Images/target.png)
 Digital signage is one of the best platforms to play advertisements nowadays. The network of digital displays that are managed from a central position and shows dynamically changing content is known as digital advertising.
 
 Main usage purposes of digital signage is for promoting products,attention grabbing content, public information systems etc. Digital advertising can be seen in many places like supermarkets, shopping malls, bus stations, clothing stores and restaurants. Advantages that come with this system are ability to deliver information to people,easy to reach a large number of crowds at once, display some attention grabbing content and reduced cost.
