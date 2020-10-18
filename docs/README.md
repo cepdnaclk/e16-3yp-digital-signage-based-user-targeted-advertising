@@ -8,7 +8,7 @@
 
 ## INTRODUCTION
 
-![image](https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising/blob/main/Images/target.png?raw=true)
+![alt text](https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising/blob/main/Images/target.png?raw=true)
 
 Digital signage is one of the best platforms to play advertisements nowadays. The network of digital displays that are managed from a central position and shows dynamically changing content is known as digital advertising.
 
