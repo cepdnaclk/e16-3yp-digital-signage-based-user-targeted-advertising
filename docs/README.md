@@ -8,7 +8,7 @@
 
 ## INTRODUCTION
 
-![image](https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising/blob/main/Images/target.png)
+![image](https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising/blob/main/Images/target.png?raw=true)
 
 Digital signage is one of the best platforms to play advertisements nowadays. The network of digital displays that are managed from a central position and shows dynamically changing content is known as digital advertising.
 
@@ -26,13 +26,13 @@ Our solution architecture mainly consists of three units. They are digital signa
 
 ## PROPOSED SYSTEM : METHODOLOGY 
 
-![image_architecture](https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising/blob/main/Images/Capture_architecture.PNG)
+![image_architecture](https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising/blob/main/Images/Capture_architecture.PNG?raw=true)
 
 
 - The system consists of raspberry pi 3 which will act as the heart of the system and mainly django as the web application framework for the front end as well as for the backend. 
 - The Digital display is connected to raspberry pi using HDMI and the user detecting and analyzing unit is attached to the digital display. This user detecting and analyzing unit mainly consists of Raspberry PI camera module and distance sensor module. OpenCV library is used since it consists of features such as face detection and image processing.
 
-![image_detect](https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising/blob/main/Images/detect.jpg)
+![image_detect](https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising/blob/main/Images/detect.jpg?raw=true)
 
 
 - AWS is used as the web server as it provides a number of economical and flexible features. 
