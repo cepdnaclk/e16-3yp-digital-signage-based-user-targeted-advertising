@@ -23,6 +23,9 @@ The buyer(shop owner) of the digital signage unit can upload their advertisement
 
 Our solution architecture mainly consists of three units. They are digital signage control unit , user detecting and analysing unit and the smart power supply unit.
 
+## Advisors
+- Dr. Isuru Nawinne
+- Mr. Ziyan Maraikar
 
 
 ##### Links:
