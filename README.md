@@ -23,10 +23,22 @@ The buyer(shop owner) of the digital signage unit can upload their advertisement
 
 Our solution architecture mainly consists of three units. They are digital signage control unit , user detecting and analysing unit and the smart power supply unit.
 
+## PROPOSED SYSTEM : METHODOLOGY 
+
+![image_architecture](https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising/blob/main/Images/Capture_architecture.PNG)
+
+- The system consists of raspberry pi 3 which will act as the heart of the system and mainly django as the web application framework for the front end as well as for the backend. 
+- The Digital display is connected to raspberry pi using HDMI and the user detecting and analyzing unit is attached to the digital display. This user detecting and analyzing unit mainly consists of Raspberry PI camera module and distance sensor module. OpenCV library is used since it consists of features such as face detection and image processing.
+
+![image_detect](https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising/blob/main/Images/detect.jpg)
+
+- AWS is used as the web server as it provides a number of economical and flexible features. 
+- Flutter is used as the mobile app framework where dart is used as the programming language since the same code base can be used to develop both android and ios applications.
+- As an additional improvement, a power supply unit which can control the digital screen on/off through the web application will be implemented.
+
 ## Advisors
 - Dr. Isuru Nawinne
 - Mr. Ziyan Maraikar
-
 
 ##### Links:
 - [Department of Computer Engineering Website](http://www.ce.pdn.ac.lk/) 
