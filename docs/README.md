@@ -42,7 +42,7 @@ Our solution architecture mainly consists of three units. They are digital signa
 ## Budget
 Bill of material to produce one unit of digital signage unit is estimated as below.
 
-![image_detect](https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising/blob/main/Images/billofmaterials.PNG? raw = true)
+![image_detect](https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising/blob/main/Images/billofmaterials.PNG?raw=true)
 
 ## Advisors
 - Dr. Isuru Nawinne
