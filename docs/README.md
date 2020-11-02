@@ -39,6 +39,11 @@ Our solution architecture mainly consists of three units. They are digital signa
 - Flutter is used as the mobile app framework where dart is used as the programming language since the same code base can be used to develop both android and ios applications.
 - As an additional improvement, a power supply unit which can control the digital screen on/off through the web application will be implemented.
 
+## Budget
+Bill of material to produce one unit of digital signage unit is estimated as below.
+
+![image_detect](https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising/blob/main/Images/billofmaterials.PNG?raw=true)
+
 ## Advisors
 - Dr. Isuru Nawinne
 - Mr. Ziyan Maraikar
