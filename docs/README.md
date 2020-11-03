@@ -31,6 +31,8 @@ Our solution architecture mainly consists of three units. They are digital signa
 
 ## PROPOSED SYSTEM : METHODOLOGY 
 
+![image_architecture](https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising/blob/main/Images/Capture_architecture.PNG?raw=true)
+
 <img src="https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising/blob/main/Images/Capture_architecture.PNG" alt="image_architecture" width="200" height="250" />
 
 - The system consists of raspberry pi 3 which will act as the heart of the system and mainly django as the web application framework for the front end as well as for the backend. 
