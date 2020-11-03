@@ -9,13 +9,13 @@
                            
 <div id="Members" >
     <div class="inline-block">
-        <img src ="https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising/blob/main/Images/Member1.jpg" align="left" width="230" height="250">
+        <img src ="https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising/blob/main/Images/Member1.jpg" align="left" width="250" height="250">
     </div>
     <div class="inline-block">
-        <img src ="https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising/blob/main/Images/Member2.jpg" align="left" width="230" height="250">
+        <img src ="https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising/blob/main/Images/Member2.jpg" align="left" width="250" height="250">
     </div>
     <div class="inline-block">
-       <img src ="https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising/blob/main/Images/Member3.jpg" alt= " "  width="230" height="250">
+       <img src ="https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising/blob/main/Images/Member3.jpg" alt= " "  width="250" height="250">
     </div>
 </div>
 
