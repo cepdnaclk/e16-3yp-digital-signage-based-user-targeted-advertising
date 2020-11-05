@@ -61,6 +61,9 @@
                         <p class="text-white-50 mb-3 text-justify">Most of the advertisements displayed in the digital screens are not relevant for the targeted audience. So,ninety percent of the advertisements displayed using the currently existing digital signages are not very effective.</p>
                         <p class="text-white-50 mb-5 text-justify">To overcome this kind of issues our proposed solution consists of an upgraded version with additional hardware/software which can do User Targeted Advertising. Here our aim is while showing content that changes dynamically, when a particular crowd (male/female/children) is identified in front of the screens it will change the current content flow and show some relevant,interesting advertisement for the targeted audience that might catch their attention.</p>
                         <!--<a class="btn btn-light btn-xl js-scroll-trigger" href="#design">Find further!</a>-->
+
+                        <br><br><br>
+                        <a class="btn btn-primary btn-xl js-scroll-trigger" href="https://www.youtube.com/watch?v=sX5OLr6ZVRk">Watch Product Video</a>
                     </div>
                 </div>
             </div>
@@ -97,21 +100,29 @@
                 <!--<div class="col-lg-10 justify-content-center">-->
                 <div class="row">
                     <div class="col-lg-6 ml-auto text-center mb-1 mb-lg-0">
-                        <h2 class="text-center mt-0">ER Model</h2>
+                        <h2 class="text-center mt-0">ER Model - Database Structure</h2>
                         <hr class="divider my-4" />
-                        <img class="img-fluid" src="assets/img/portfolio/thumbnails/er_diagram .png" alt="" width="900" height="900"/>
+                        <br>
+                        <img class="img-fluid" src="assets/img/portfolio/thumbnails/er_diagram .png" alt="" vertical-align: middle/><br><br><br>
+                         <div class="col-lg-12 text-left text-muted mb-5">
+                            <ul style="line-height: 200%;align-content: left; padding-left:0">
+                                
+                                <li>Main Entities Of The Database are ADMINISTRATION, CUSTOMER(Shop owner who is willing to buy signage unit), ADVERTISEMENT, TEMPLATE and WORK_TIME. Main relationships are REGISTERS, UPLOADS, SCHEDULES and HAS.</li>
+                                <li>ADMINISTRATION is authorized to register a new user to the system. And login credentials are given to new users by the ADMINISTRATION.</li>
+                            </ul>
+                        </div>
+
+                        
                     </div>
                     <div class="col-lg-6 mr-auto text-center">
-                        <h2 class="text-center mt-0">Structure Of The Database</h2>
-                        <hr class="divider my-4" />
+
                         <div class="col-lg-12 text-left text-muted mb-5">
                             <ul style="line-height: 200%;">
-                                <li>Main Entities Of The Database is ADMINISTRATION, CUSTOMER(Shop owner who is willing to buy signage unit), ADVERTISEMENT and TEMPLATE.</li>
-                                <li>ADMINISTRATION is authorized to register a new user to the system. And login credentials are given to new users by the ADMINISTRATION.</li>
+                               <br><br><br>
                                 <li>CUSTOMER table has a composite key, Customer_id along with Device_id. Having a composite key here is useful when same customer is buying more than one signage unit. Here,Device_id refers to the MAC address of the NIC of digital signage controlling unit.</li>
                                 <li>1:n relationship exists between ADMINISTRATION and CUMSTOMER, beacause a customer only has one ADMINISTRATION and ADMINISTRATION has many customers. And we can see total participation in both sides because everyone should be registered to use the system.</li>
                                 <li>TEMPLATES entity keeps different templates for the advertisement. Each template is identified by a unique id. When uploading the advertisements user can select a layout for the advertisement if he likes.</li>
-                                <li>ADVERTISEMENT entity has a unique id as the primary key. Advertisements can be in three types.   <br>-Image,   Ticker(Text),   Video</li>
+                                 <li>ADVERTISEMENT entity has a unique id as the primary key. Advertisements can be in three types.   <br>-Image,   Ticker(Text),   Video</li>
                                 <li>As digital screen can be turned on and off only within the working hours because of our smart power supply unit, customer can schedule the time slots for each day. That data is stored in WORKING_TIME entity. It is a weak entity that does not have a primary key. Here, we have got a weak key 'Day' and same key can be repeated.</li>
                             </ul>    
                         </div> 
