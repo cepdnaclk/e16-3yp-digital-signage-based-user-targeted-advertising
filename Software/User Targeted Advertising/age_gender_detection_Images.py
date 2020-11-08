@@ -10,22 +10,22 @@ age_list = ['(0, 2)', '(4, 6)', '(8, 12)', '(15, 20)', '(25, 32)', '(38, 43)', '
 gender_list = ['Male', 'Female']
 
 #read pre-trained neural network data from path to variables
-protoPathAge = os.path.sep.join([r"C:\Users\hp\Desktop\AgeGenderDeepLearning-master\models",  "deploy_age.prototxt"])
-modelPathAge = os.path.sep.join([r"C:\Users\hp\Desktop\AgeGenderDeepLearning-master\models","age_net.caffemodel"])
+protoPathAge = os.path.sep.join([r"PATH",  "deploy_age.prototxt"])
+modelPathAge = os.path.sep.join([r"PATH","age_net.caffemodel"])
 
-protoPathGender = os.path.sep.join([r"C:\Users\hp\Desktop\AgeGenderDeepLearning-master\models",  "deploy_gender.prototxt"])
-modelPathGender = os.path.sep.join([r"C:\Users\hp\Desktop\AgeGenderDeepLearning-master\models","gender_net.caffemodel"])
+protoPathGender = os.path.sep.join([r"PATH",  "deploy_gender.prototxt"])
+modelPathGender = os.path.sep.join([r"PATH","gender_net.caffemodel"])
 
 #load neural network pre-trained models for detection
 age_net = cv2.dnn.readNetFromCaffe(protoPathAge,modelPathAge)
 gender_net = cv2.dnn.readNetFromCaffe(protoPathGender,modelPathGender)
 
 #load pre-build model for face detection
-face_cascade_path = os.path.sep.join([r"C:\Users\hp\Desktop\AgeGenderDeepLearning-master\haarcascade",  "haarcascade_frontalface_default.xml"])
+face_cascade_path = os.path.sep.join([r"PATH",  "haarcascade_frontalface_default.xml"])
 face_cascade = cv2.CascadeClassifier(face_cascade_path)
 
 #read image from path
-image = cv2.imread(r"C:\Users\hp\Desktop\AgeGenderDeepLearning-master\Member2.jpg")
+image = cv2.imread(r"PATH")
 
 #convert image to grey
 imgGray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
