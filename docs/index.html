@@ -28,6 +28,7 @@
                     <ul class="navbar-nav ml-auto my-2 my-lg-0">
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#design">Design</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#progress">Progress</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#services">Services</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#portfolio">Places</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a></li>
@@ -94,6 +95,9 @@
                 </div>
             </div>
         </section>
+
+        
+
         <section class="page-section bg-dark text-white" id="design">    
             <div class="container">
                 <!--<div class="col-lg-10 justify-content-center">-->
@@ -170,7 +174,71 @@
                     </div>
                 </div>
             </div>
-        </section>        
+        </section> 
+
+
+        <section class="page-section bg-dark text-white" id="design">    
+            <div class="container">
+                <!--<div class="col-lg-10 justify-content-center">-->
+                <div class="row">
+                    <div class="col-lg-6 ml-auto text-center mb-1 mb-lg-0">
+                        <h2 class="text-center mt-0">Flow Chart</h2>
+                        <hr class="divider my-4" />
+                        <img class="img-fluid" src="assets/img/portfolio/thumbnails/flowchart.png" alt="" style="width:700px;height:300px;"/>
+                    </div>
+                <div class="col-lg-6 mr-auto text-center">
+                        <h2 class="text-center mt-0">Data Flow</h2>
+                        <hr class="divider my-4" />
+                        <div class="col-lg-12 text-left text-muted mb-5">
+                            <ul style="line-height: 200%;">
+                                <li>User is supposed to upload the advertisements using the mobile app or web app.</li>
+                                <li>Those advertisements are uploaded into SD card in RPI board through the Web server.</li>
+                                <li>Image of the person who is infront of the screen is captured by the camera module and given to RPI board.</li>
+                                <li>That image is processed with trained data models and gender and age groups of the person is caculated.</li>
+                                <li>According to the results, best advertisement is shown to the user.</li>
+                            </ul>    
+                        </div> 
+
+                    </div>
+                </div>
+            </div>
+        </section>  
+
+
+
+        <!-- User targeted advertising-->
+        <section class="page-section " id="progress">    
+            <div class="container">
+                <!--<div class="col-lg-10 justify-content-center">-->
+                <div class="row">
+                    <div class="col-lg-6 ml-auto text-center mb-1 mb-lg-0">
+                        <h2 class="text-left mt-0">&#8287;&#8287;&#8287;&#8287;&#8287;User Targeted Advertising</h2>
+                        <hr class="divider my-4" align="text-center" />
+
+                        <img class="img-fluid" src="assets/img/portfolio/thumbnails/allone.png" alt="" style="width:800px;height:500px;"/>
+                    </div>
+                        
+                <div class="col-lg-6 mr-auto text-center">
+                        <h2 class="text-center mt-0"></h2>
+                        <div class="col-lg-12 text-left text-muted mb-5">
+                            <ul style="line-height: 200%;">
+                                <br><br>
+                                <li>Age and gender detection in our system is mainly done with Convolutional Neural Networks.</li>
+                                <li>We have used the CNN models trained by Gil Levi and Tal Hassner (two Israel researchers) using caffe framework and we have used the OpenCV’s dnn package which stands for “Deep Neural Networks”.</li>
+                                <li>To detect faces from images,webcam and to import neural network trained models, opencv libraries such as haarcascade,dnn packages are used in our implementation for predicting gender and age.</li>
+                                <li>CNN consists of 8 values for 8 age classes (“0–2”, “4–6”, “8–13”, “15–20”, “25–32”, “38–43”, “48–53” and “60-100”) and two values for two gender clases ("Male" and "Female.") </li>
+                                <li>As you can see in these pictures, this model accurately predict the gender and the age group.</li>
+                                <li> <a href="https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising/tree/main/Software/User%20Targeted%20Advertising">Link for Github Files </a></li>
+                            </ul>    
+                        </div> 
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
         <!-- Services-->
         <section class="page-section bg-transparent" id="services">
             <div class="container">
@@ -290,7 +358,7 @@
             <!---->
             <div class="container text-center">
                 <h2 class="mb-4 text-dark mt-2">Find more details from our github project repository</h2>
-                <a class="btn btn-dark btn-xl mb-5" href="https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising" target="_blank"">Visit now!</a>
+                <a class="btn btn-dark btn-xl mb-5" href="https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising" target="_blank">Visit now!</a>
             </div>
             <div class="container mt-3">
                 <div class="row justify-content-center">
