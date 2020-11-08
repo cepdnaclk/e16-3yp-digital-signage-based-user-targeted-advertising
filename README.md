@@ -41,7 +41,7 @@ Our solution architecture mainly consists of three units. They are digital signa
 <img src="https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising/blob/main/Images/Capture_architecture.PNG" alt="image_architecture" width="400" height="500" />
 
 - The system consists of raspberry pi 3 which will act as the heart of the system and mainly django as the web application framework for the front end as well as for the backend. 
-- The Digital display is connected to raspberry pi using HDMI and the user detecting and analyzing unit is attached to the digital display. This user detecting and analyzing unit mainly consists of Raspberry PI camera module and distance sensor module. OpenCV library is used since it consists of features such as face detection and image processing.
+- The Digital display is connected to raspberry pi using HDMI and the user detecting and analyzing unit is attached to the digital display. This user detecting and analyzing unit mainly consists of Raspberry PI camera module and distance sensor module. OpenCV library is used since it consists of algorithems for easy face detection and gender & age classification.
 
 <img src="https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising/blob/main/Images/detect.jpg" alt="image_detect" width="650" height="350"/>
 

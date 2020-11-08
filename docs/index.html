@@ -29,7 +29,7 @@
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#design">Design</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#services">Services</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#places">Places</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#portfolio">Places</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contact Us</a></li>
                     </ul>
                 </div>
@@ -58,11 +58,10 @@
                     <div class="col-lg-9 text-center">
                         <h2 class="text-white mt-0">Problem and Solution</h2>
                         <hr class="divider light my-4" />
-                        <p class="text-white-50 mb-3 text-justify">Most of the advertisements displayed in the digital screens are not relevant for the targeted audience. So,ninety percent of the advertisements displayed using the currently existing digital signages are not very effective.</p>
-                        <p class="text-white-50 mb-5 text-justify">To overcome this kind of issues our proposed solution consists of an upgraded version with additional hardware/software which can do User Targeted Advertising. Here our aim is while showing content that changes dynamically, when a particular crowd (male/female/children) is identified in front of the screens it will change the current content flow and show some relevant,interesting advertisement for the targeted audience that might catch their attention.</p>
+                        <p class="text-white-50 mb-3 text-justify">Most of the advertisements displayed in the digital screens are not relevant for the targeted audience. So,ninety percent of the advertisements displayed using the currently existing digital signages are not very effective. Also the provided digital signage solutions are expensive to afford for most of the SMEs(Small and Medium Enterprises).</p>
+                        <p class="text-white-50 mb-3 text-justify">To overcome these kind of issues our proposed solution consists of an upgraded version with additional hardware/software which can do User Targeted Advertising. Here our aim is while showing content that changes dynamically, when a particular crowd (male/female/children) is identified in front of the screens it will change the current content flow and show some relevant,interesting advertisement for the targeted audience that might catch their attention.</p>
+                        <p class="text-white-50 mb-4 text-justify"> The buyer(shop owner) of the digital signage unit can upload their advertisements using the provided user authenticated web application or the mobile application. Also add some specific advertisements categorized by gender and age group. When a user in front is detected specific content will be visible to the targeted audience.</p>
                         <!--<a class="btn btn-light btn-xl js-scroll-trigger" href="#design">Find further!</a>-->
-
-                        <br><br><br>
                         <a class="btn btn-primary btn-xl js-scroll-trigger" href="https://www.youtube.com/watch?v=sX5OLr6ZVRk" target="_blank">Watch Product Video</a>
                     </div>
                 </div>
@@ -76,18 +75,18 @@
                     <div class="col-lg-6 ml-auto text-center mb-1 mb-lg-0">
                         <h2 class="text-center mt-0">Design Architecture</h2>
                         <hr class="divider my-4" />
-                        <img class="img-fluid" src="assets/img/portfolio/thumbnails/architecture.png" alt="" />
+                        <img class="img-fluid" src="assets/img/portfolio/thumbnails/architecture_diagram.jpg" alt="" />
                     </div>
                 <div class="col-lg-6 mr-auto text-center">
                         <h2 class="text-center mt-0">Design Technologies</h2>
                         <hr class="divider my-4" />
                         <div class="col-lg-12 text-left text-muted mb-5">
                             <ul style="line-height: 200%;">
-                                <li>The system consists of raspberry pi 3 which will act as the heart of the system and mainly django as the web application framework for the front end as well as for the backend.</li>
-                                <li>The Digital display is connected to raspberry pi using HDMI and the user detecting and analyzing unit is attached to the digital display. This user detecting and analyzing unit mainly consists of Raspberry PI camera module and distance sensor module.</li>
-                                <li>AWS is used as the web server as it provides a number of economical and flexible features.</li>
+                                <li>The digital signage control unit consists of raspberry pi 3 which will act as the heart of the system and mainly django as the web application framework for the front end as well as for the backend.</li>
+                                <li>The Digital display is connected to raspberry pi using HDMI and the user detecting and Identifying unit is attached to the digital display. This user detecting and Identifying unit mainly consists of Raspberry PI camera module and distance sensor module.</li>
+                                <li>Firebase or AWS will be selected as the web server after further reseaching  them as they both provide a number of economical and flexible features. The most reliable and our desired features providing server will be choosed.</li>
                                 <li>Flutter is used as the mobile app framework where dart is used as the programming language since the same code base can be used to develop both android and ios applications.</li>
-                                <li>As an additional improvement, a power supply unit which can control the digital screen on/off through the web application will be implemented.</li>
+                                <li>As an additional improvement, a smart power supply unit which can control the digital screen on/off through the web application will be implemented.</li>
                             </ul>    
                         </div> 
 
@@ -103,20 +102,16 @@
                         <h2 class="text-center mt-0">ER Model - Database Structure</h2>
                         <hr class="divider my-4" />
                         <br>
-                        <img class="img-fluid" src="assets/img/portfolio/thumbnails/er_diagram .png" alt="" vertical-align: middle/><br><br><br>
-                         <div class="col-lg-12 text-left text-muted mb-5">
-                            <ul style="line-height: 200%;align-content: left; padding-left:0">
-                                
+                        <img class="img-fluid mb-4" src="assets/img/portfolio/thumbnails/er_diagram.png" alt="" />  
+                         <div class="col-lg-12 text-left text-white-50 mb-5">
+                            <ul style="line-height: 200%; align-content: left; padding-left:0">    
                                 <li>Main Entities Of The Database are ADMINISTRATION, CUSTOMER(Shop owner who is willing to buy signage unit), ADVERTISEMENT, TEMPLATE and WORK_TIME. Main relationships are REGISTERS, UPLOADS, SCHEDULES and HAS.</li>
                                 <li>ADMINISTRATION is authorized to register a new user to the system. And login credentials are given to new users by the ADMINISTRATION.</li>
                             </ul>
-                        </div>
-
-                        
+                        </div>       
                     </div>
                     <div class="col-lg-6 mr-auto text-center">
-
-                        <div class="col-lg-12 text-left text-muted mb-5">
+                        <div class="col-lg-12 text-left text-white-50 mb-5">
                             <ul style="line-height: 200%;">
                                <br><br><br>
                                 <li>CUSTOMER table has a composite key, Customer_id along with Device_id. Having a composite key here is useful when same customer is buying more than one signage unit. Here,Device_id refers to the MAC address of the NIC of digital signage controlling unit.</li>
@@ -126,7 +121,6 @@
                                 <li>As digital screen can be turned on and off only within the working hours because of our smart power supply unit, customer can schedule the time slots for each day. That data is stored in WORKING_TIME entity. It is a weak entity that does not have a primary key. Here, we have got a weak key 'Day' and same key can be repeated.</li>
                             </ul>    
                         </div> 
-
                     </div>
                 </div>
             </div>
@@ -138,35 +132,39 @@
                     <div class="col-lg-6 ml-auto text-center mb-1 mb-lg-0">
                         <h2 class="text-center mt-0">Simplified Circuit Diagram</h2>
                         <hr class="divider my-4" />
-                        <img class="img-fluid" src="assets/img/portfolio/thumbnails/simplified_circuit.png" alt="" />
+                        <img class="img-fluid mt-4" src="assets/img/portfolio/thumbnails/simplified_circuit.png" alt="" />
                     </div>
                 <div class="col-lg-6 mr-auto text-center">
                         <h2 class="text-center mt-0">Components Needed</h2>
                         <hr class="divider my-4" />
                         <div class="col-lg-12 text-left text-muted mb-5">
-                            <ul style="line-height: 200%;">
-                                <h5 class="text-center mt-0">Digital Signage Controlling Unit</h5>
+                            <h5 class="text-left mt-4 mb-2" style="padding-left: 70px">Digital Signage Controlling Unit</h5>
+                            <ul style="line-height: 180%;padding-left: 100px">
+                                
                                 <li>Raspberry Pi - &#36 35</li>
                                 <li>SD card - &#36 10</li>
                                 <li>Cooling Fan - &#36 8</li>
                                 <li>LEDs, Resitors(220&#8486) - &#36 3</li> 
                                 <li>Switches - &#36 7</li> 
-                                <li>Cover - &#36 7</li> 
-
-                                <h5 class="text-center mt-0">User Identifying and Detecting Unit</h5>
-                                <li>Motion Sensor - &#36 5</li>
+                                <li>Cover - &#36 7</li>
+                            </ul>  
+                            <h5 class="text-left mt-4 mb-2" style="padding-left: 70px">User Identifying and Detecting Unit</h5>
+                            <ul style="line-height: 180%;padding-left: 100px">
+                                
+                                <li>Ultrasonic Sensor - &#36 5</li>
                                 <li>Camera Module - &#36 10</li>
                                 <li>Cables - &#36 5</li>
                                 <li>LEDs, Resitors(220&#8486) - &#36 3</li>
                                 <li>Cover - &#36 7</li> 
-
-                                <h5 class="text-center mt-0">Smart Power Supply Unit</h5>
-                                <li>Relay - &#36 5</li>
+                            </ul>
+                            <h5 class="text-left mt-4 mb-2" style="padding-left: 70px">Smart Power Supply Unit</h5>
+                            <ul style="line-height: 180%;padding-left: 100px">
+                                
+                                <li>Relay Module - &#36 5</li>
                                 <li>Switch - &#36 5</li>
                                 <li>Cables - &#36 8</li>
                                 <li>LED, Diode, Resitor(100k&#8486) - &#36 5</li>
                                 <li>Cover - &#36 7</li> 
-
                             </ul>    
                         </div> 
                     </div>
@@ -211,91 +209,95 @@
             </div>
         </section>
         <!-- Portfolio-->
-        <div id="places">
+        <div id="portfolio">
             <div class="container-fluid p-0">
                 <h2 class="text-center mt-0">Where we can see digital signage...</h2>
                 <hr class="divider my-4" />
                 <div class="row no-gutters">
                     <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/user1.jpg">
-                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/user1.jpg" alt="" />
-                            <!--
+                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/1.jpg">
+                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/1.jpg" alt="" />
+                            
                             <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Retail shops</div>
-                                <div class="project-name">Project Name</div>
-                            </div>
-                            -->
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/user2.jpg">
-                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/user2.jpg" alt="" />
-                                  <!--
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div>
-                        -->
-                        </a>
-                    </div>
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/user3.jpg">
-                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/user3.jpg" alt="" />
-                             <!--
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
-                            </div>
-                        -->
-                        </a>
-                    </div>
-                    <!--
-                    <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/user4.jpg">
-                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/user4.jpg" alt="" />
-                            <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
+                                <!-- <div class="project-category text-white-50">Category</div> -->
+                               <div class="project-name">Shopping malls</div>
                             </div>
                         </a>
                     </div>
                     <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/user5.jpg">
-                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/user5.jpg" alt="" />
+                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/2.jpg">
+                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/2.jpg" alt="" />
+                                 
                             <div class="portfolio-box-caption">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
+                                <!-- <div class="project-category text-white-50">Category</div> -->
+                                <div class="project-name">Outdoor</div>
                             </div>
                         </a>
                     </div>
                     <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/user6.jpg">
-                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/user6.jpg" alt="" />
+                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/3.jpg">
+                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/3.jpg" alt="" />
+                             
+                            <div class="portfolio-box-caption">
+                               <!-- <div class="project-category text-white-50">Category</div> -->
+                                <div class="project-name">Restaurants</div>
+                            </div>
+                        </a>
+                    </div>
+                
+                    <div class="col-lg-4 col-sm-6">
+                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/4.png">
+                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/4.png" alt="" />
+                            <div class="portfolio-box-caption">
+                               <!-- <div class="project-category text-white-50">Category</div> -->
+                                <div class="project-name">Supermarkets</div>
+                            </div>
+                        </a>
+                    </div>                    
+                    <div class="col-lg-4 col-sm-6">
+                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/5.png">
+                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/5.png" alt="" />
+                            <div class="portfolio-box-caption">
+                                <!-- <div class="project-category text-white-50">Category</div> -->
+                                <div class="project-name">Clothing-retail</div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/6.png">
+                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/6.png" alt="" />
                             <div class="portfolio-box-caption p-3">
-                                <div class="project-category text-white-50">Category</div>
-                                <div class="project-name">Project Name</div>
+                                <!-- <div class="project-category text-white-50">Category</div> -->
+                                <div class="project-name">Airports</div>
                             </div>
                         </a>
                     </div>
-                    -->
                 </div>
             </div>
         </div>
+        
         <!-- Call to action-->
+        <!--
         <section class="page-section bg-dark text-white">
             <div class="container text-center">
                 <h2 class="mb-4">Find more details from our github project repository</h2>
                 <a class="btn btn-light btn-xl" href="https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising" target="_blank">Visit now!</a>
             </div>
         </section>
+        -->
         <!-- Contact-->
         <section class="page-section" id="contact">
-            <div class="container">
+            <!---->
+            <div class="container text-center">
+                <h2 class="mb-4 text-dark mt-2">Find more details from our github project repository</h2>
+                <a class="btn btn-dark btn-xl mb-5" href="https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising" target="_blank"">Visit now!</a>
+            </div>
+            <div class="container mt-3">
                 <div class="row justify-content-center">
                     <div class="col-lg-8 text-center">
                         <h2 class="mt-0">Get In Touch!</h2>
                         <hr class="divider my-4" />
-                        <p class="text-muted mb-5">Feel free to visit our github accounts or email us for further details!</p>
+                        <p class="text-muted mb-3">Feel free to visit our github accounts or email us for further details!</p>
                     </div>
                 </div>
                 <div class="row">
