@@ -10161,6 +10161,42 @@ header.masthead h1 {
   opacity: 1;
 }
 
+#UIimage .container-fluid, #UIimage .container-sm, #UIimage .container-md, #UIimage .container-lg, #UIimage .container-xl {
+  max-width: 1920px;
+}
+#UIimage .container-fluid .UIimage-box, #UIimage .container-sm .UIimage-box, #UIimage .container-md .UIimage-box, #UIimage .container-lg .UIimage-box, #UIimage .container-xl .UIimage-box {
+  position: relative;
+  display: block;
+}
+#UIimage .container-fluid .UIimage-box .UIimage-box-caption, #UIimage .container-sm .UIimage-box .UIimage-box-caption, #UIimage .container-md .UIimage-box .UIimage-box-caption, #UIimage .container-lg .UIimage-box .UIimage-box-caption, #UIimage .container-xl .UIimage-box .UIimage-box-caption {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  opacity: 0;
+  color: #fff;
+  background: rgba(244, 98, 58, 0.9);
+  transition: opacity 0.25s ease;
+  text-align: center;
+}
+#UIimage .container-fluid .UIimage-box .UIimage-box-caption .project-category, #UIimage .container-sm .UIimage-box .UIimage-box-caption .project-category, #UIimage .container-md .UIimage-box .UIimage-box-caption .project-category, #UIimage .container-lg .UIimage-box .UIimage-box-caption .project-category, #UIimage .container-xl .UIimage-box .UIimage-box-caption .project-category {
+  font-family: "Merriweather Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+#UIimage .container-fluid .UIimage-box .UIimage-box-caption .project-name, #UIimage .container-sm .UIimage-box .UIimage-box-caption .project-name, #UIimage .container-md .UIimage-box .UIimage-box-caption .project-name, #UIimage .container-lg .UIimage-box .UIimage-box-caption .project-name, #UIimage .container-xl .UIimage-box .UIimage-box-caption .project-name {
+  font-size: 1.2rem;
+}
+#UIimage .container-fluid .UIimage-box:hover .UIimage-box-caption, #UIimage .container-sm .UIimage-box:hover .UIimage-box-caption, #UIimage .container-md .UIimage-box:hover .UIimage-box-caption, #UIimage .container-lg .UIimage-box:hover .UIimage-box-caption, #UIimage .container-xl .UIimage-box:hover .UIimage-box-caption {
+  opacity: 1;
+}
+
 .text-white-75 {
   color: rgba(255, 255, 255, 0.75);
 }
