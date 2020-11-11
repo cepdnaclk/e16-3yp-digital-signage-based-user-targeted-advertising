@@ -177,8 +177,8 @@
                         <img class="img-fluid mb-4" src="assets/img/portfolio/thumbnails/er_diagram.png" alt="" />  
                          <div class="col-lg-12 text-left text-white-50 mb-5">
                             <ul style="line-height: 200%; align-content: left; padding-left:0">    
-                                <li>Main Entities Of The Database are ADMINISTRATION, CUSTOMER(Shop owner who is willing to buy signage unit), ADVERTISEMENT, TEMPLATE and WORK_TIME. Main relationships are REGISTERS, UPLOADS, SCHEDULES and HAS.</li>
-                                <li>ADMINISTRATION is authorized to register a new user to the system. And login credentials are given to new users by the ADMINISTRATION.</li>
+                                <li>Main Entities Of The Database are ADMINISTRATION, CUSTOMER(Shop owner who is willing to buy signage unit), ADVERTISEMENT and WORK_TIME. Main relationships are REGISTERS, UPLOADS and SCHEDULES.</li>
+                                 <li>ADVERTISEMENT entity has a unique id as the primary key. Advertisements can be in three types.   <br>-Image,   Ticker(Text),   Video</li>
                             </ul>
                         </div>       
                     </div>
@@ -188,8 +188,7 @@
                                <br><br><br>
                                 <li>CUSTOMER table has a composite key, Customer_id along with Device_id. Having a composite key here is useful when same customer is buying more than one signage unit. Here,Device_id refers to the MAC address of the NIC of digital signage controlling unit.</li>
                                 <li>1:n relationship exists between ADMINISTRATION and CUMSTOMER, beacause a customer only has one ADMINISTRATION and ADMINISTRATION has many customers. And we can see total participation in both sides because everyone should be registered to use the system.</li>
-                                <li>TEMPLATES entity keeps different templates for the advertisement. Each template is identified by a unique id. When uploading the advertisements user can select a layout for the advertisement if he likes.</li>
-                                 <li>ADVERTISEMENT entity has a unique id as the primary key. Advertisements can be in three types.   <br>-Image,   Ticker(Text),   Video</li>
+                                 
                                 <li>As digital screen can be turned on and off only within the working hours because of our smart power supply unit, customer can schedule the time slots for each day. That data is stored in WORKING_TIME entity. It is a weak entity that does not have a primary key. Here, we have got a weak key 'Day' and same key can be repeated.</li>
                             </ul>    
                         </div> 
