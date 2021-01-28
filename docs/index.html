@@ -83,10 +83,10 @@
                         <hr class="divider my-4" />
                         <div class="col-lg-12 text-left text-muted mb-5">
                             <ul style="line-height: 200%;">
-                                <li>The digital signage control unit consists of raspberry pi 3 which will act as the heart of the system and mainly django as the web application framework for the front end as well as for the backend.</li>
+                                <li>The digital signage control unit consists of raspberry pi 3 which acts as the heart of the system.</li>
                                 <li>The Digital display is connected to raspberry pi using HDMI and the user detecting and Identifying unit is attached to the digital display. This user detecting and Identifying unit mainly consists of Raspberry PI camera module and distance sensor module.</li>
-                                <li>Firebase or AWS will be selected as the web server after further reseaching  them as they both provide a number of economical and flexible features. The most reliable and our desired features providing server will be choosed.</li>
-                                <li>Flutter is used as the mobile app framework where dart is used as the programming language since the same code base can be used to develop both android and ios applications.</li>
+                                <li>Firebase is used as the back-end.</li>
+                                <li>Flutter is used as the web/mobile app framework for the front-end development. Dart is used as the programming language where the same code base can be used to develop both android and ios applications.</li>
                                 <li>As an additional improvement, a smart power supply unit which can control the digital screen on/off through the web application will be implemented.</li>
                             </ul>    
                         </div> 
@@ -177,8 +177,8 @@
                         <img class="img-fluid mb-4" src="assets/img/portfolio/thumbnails/er_diagram.png" alt="" />  
                          <div class="col-lg-12 text-left text-white-50 mb-5">
                             <ul style="line-height: 200%; align-content: left; padding-left:0">    
-                                <li>Main Entities Of The Database are ADMINISTRATION, CUSTOMER(Shop owner who is willing to buy signage unit), ADVERTISEMENT, TEMPLATE and WORK_TIME. Main relationships are REGISTERS, UPLOADS, SCHEDULES and HAS.</li>
-                                <li>ADMINISTRATION is authorized to register a new user to the system. And login credentials are given to new users by the ADMINISTRATION.</li>
+                                <li>Main Entities Of The Database are ADMINISTRATION, CUSTOMER(Shop owner who is willing to buy signage unit), ADVERTISEMENT and WORK_TIME. Main relationships are REGISTERS, UPLOADS and SCHEDULES.</li>
+                                 <li>ADVERTISEMENT entity has a unique id as the primary key. Advertisements can be in three types.   <br>-Image,   Ticker(Text),   Video</li>
                             </ul>
                         </div>       
                     </div>
@@ -188,8 +188,7 @@
                                <br><br><br>
                                 <li>CUSTOMER table has a composite key, Customer_id along with Device_id. Having a composite key here is useful when same customer is buying more than one signage unit. Here,Device_id refers to the MAC address of the NIC of digital signage controlling unit.</li>
                                 <li>1:n relationship exists between ADMINISTRATION and CUMSTOMER, beacause a customer only has one ADMINISTRATION and ADMINISTRATION has many customers. And we can see total participation in both sides because everyone should be registered to use the system.</li>
-                                <li>TEMPLATES entity keeps different templates for the advertisement. Each template is identified by a unique id. When uploading the advertisements user can select a layout for the advertisement if he likes.</li>
-                                 <li>ADVERTISEMENT entity has a unique id as the primary key. Advertisements can be in three types.   <br>-Image,   Ticker(Text),   Video</li>
+                                 
                                 <li>As digital screen can be turned on and off only within the working hours because of our smart power supply unit, customer can schedule the time slots for each day. That data is stored in WORKING_TIME entity. It is a weak entity that does not have a primary key. Here, we have got a weak key 'Day' and same key can be repeated.</li>
                             </ul>    
                         </div> 
@@ -214,28 +213,29 @@
                             <ul style="line-height: 180%;padding-left: 100px">
                                 
                                 <li>Raspberry Pi - &#36 35</li>
+                                <li>RPi Power Supply - &#36 9</li>
                                 <li>SD card - &#36 10</li>
-                                <li>Cooling Fan - &#36 8</li>
-                                <li>LEDs, Resitors(220&#8486) - &#36 3</li> 
-                                <li>Switches - &#36 7</li> 
+                                <li>Cooling Fan - &#36 4</li>
+                                <li>LEDs, Resitors(220&#8486) - &#36 0.5</li> 
+                                <li>Push Buttons - &#36 0.5</li> 
                                 <li>Cover - &#36 7</li>
                             </ul>  
                             <h5 class="text-left mt-4 mb-2" style="padding-left: 70px">User Identifying and Detecting Unit</h5>
                             <ul style="line-height: 180%;padding-left: 100px">
                                 
-                                <li>Ultrasonic Sensor - &#36 5</li>
+                                <li>Ultrasonic Sensor - &#36 3</li>
                                 <li>Camera Module - &#36 10</li>
                                 <li>Cables - &#36 5</li>
-                                <li>LEDs, Resitors(220&#8486) - &#36 3</li>
+                                <li>LEDs, Resitors(220&#8486) - &#36 0.5</li>
                                 <li>Cover - &#36 7</li> 
                             </ul>
                             <h5 class="text-left mt-4 mb-2" style="padding-left: 70px">Smart Power Supply Unit</h5>
                             <ul style="line-height: 180%;padding-left: 100px">
                                 
-                                <li>Relay Module - &#36 5</li>
+                                <li>Relay Module - &#36 3</li>
                                 <li>Switch - &#36 5</li>
-                                <li>Cables - &#36 8</li>
-                                <li>LED, Diode, Resitor(100k&#8486) - &#36 5</li>
+                                <li>Cables - &#36 3</li>
+                                <li>LED, Diode, Resitor(100k&#8486) - &#36 1</li>
                                 <li>Cover - &#36 7</li> 
                             </ul>    
                         </div> 
