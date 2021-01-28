@@ -15,7 +15,7 @@ class Smartpower extends StatelessWidget {
       appBar: AppBar(
         title: Text("Smart Power Control"),
       ),
-      body: MyHomePage(),
+      body: PowerPage(),
     );
   }
 }
@@ -25,12 +25,12 @@ enum PowerState {
   turnOff,
 }
 
-class MyHomePage extends StatefulWidget {
+class PowerPage extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _PowerPageState createState() => _PowerPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _PowerPageState extends State<PowerPage> {
   PowerState selectState;
   final MQTTClientWrapper mqttClientWrapper = new MQTTClientWrapper();
 
@@ -84,10 +84,40 @@ class _MyHomePageState extends State<MyHomePage> {
                 result = await validateMAC(userMAC);
                 setState(() {
                   if (result == true) {
+                    showDialog(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                        title: Text("Alert!"),
+                        content: Text("Valid Mac Address"),
+                        actions: <Widget>[
+                          FlatButton(
+                            onPressed: () {
+                              Navigator.of(ctx).pop();
+                            },
+                            child: Text("continue"),
+                          ),
+                        ],
+                      ),
+                    );
                     setup();
-                    print("valid MacAddress  - $userMAC ");
+                    //print("valid MacAddress  - $userMAC ");
                   } else {
-                    print("Invalid Mac Address");
+                    showDialog(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                        title: Text("Alert!"),
+                        content: Text("Invalid Mac Address"),
+                        actions: <Widget>[
+                          FlatButton(
+                            onPressed: () {
+                              Navigator.of(ctx).pop();
+                            },
+                            child: Text("try again"),
+                          ),
+                        ],
+                      ),
+                    );
+                    //print("Invalid Mac Address");
                     selectState = null;
                   }
                 });
