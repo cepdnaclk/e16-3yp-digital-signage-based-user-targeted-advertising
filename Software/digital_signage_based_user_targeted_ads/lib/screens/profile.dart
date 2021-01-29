@@ -24,13 +24,11 @@ class Profile extends StatelessWidget {
                       Navigator.pop(context);
                       AuthService().signOut();
                     },
-                    child: Text("okay"),
+                    child: Text("Okay"),
                   ),
                 ],
               ),
             );
-            //AuthService().signOut();
-            //Navigator.pop(context);
           },
         ),
       ),
