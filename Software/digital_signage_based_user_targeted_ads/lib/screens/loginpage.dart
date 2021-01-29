@@ -57,14 +57,12 @@ class _LoginPageState extends State<LoginPage> {
                       Center(child: codeSent ? Text('Login') : Text('Verify')),
                   onPressed: () {
                     setState(() {
-                      showProgressloading =
-                          true; // then login button is pressed the circular flutter indicator will get active
+                      showProgressloading = true;
                     });
 
                     if (codeSent == true) {
                       new Future.delayed(const Duration(seconds: 2), () {
                         setState(() => showProgressloading = false);
-                        //AuthService().signInWithOTP(smsCode, verificationId);
                       });
                       AuthService().signInWithOTP(smsCode, verificationId);
                     } else {
@@ -73,11 +71,6 @@ class _LoginPageState extends State<LoginPage> {
                       });
                       verifyPhone(phoneNo);
                     }
-                    /*
-                    codeSent
-                        ? AuthService().signInWithOTP(smsCode, verificationId)
-                        : verifyPhone(phoneNo);
-                  */
                   },
                 ),
               )
@@ -95,7 +88,6 @@ class _LoginPageState extends State<LoginPage> {
 
     final PhoneVerificationFailed verificationfailed =
         (FirebaseAuthException authException) {
-      //print("ERROR OCCURED");
       print('${authException.message}');
     };
 

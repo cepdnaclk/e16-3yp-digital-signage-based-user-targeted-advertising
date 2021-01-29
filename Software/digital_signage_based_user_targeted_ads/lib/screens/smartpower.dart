@@ -70,6 +70,7 @@ class _PowerPageState extends State<PowerPage> {
             padding: EdgeInsets.fromLTRB(20, 10, 20, 2),
             child: TextFormField(
               controller: macAddress,
+              maxLength: 4,
               decoration: InputDecoration(
                 labelText: 'MAC Address',
                 border: OutlineInputBorder(),
@@ -165,17 +166,64 @@ class _PowerPageState extends State<PowerPage> {
               ),
             ),
           ),
-          Expanded(
+          Padding(
+            padding: EdgeInsets.all(10),
             child: FloatingActionButton.extended(
               onPressed: () {
                 if (selectState == PowerState.turnOn && result == true) {
                   print("Screen ON");
                   mqttClientWrapper.publishMessage("1");
+                  showDialog(
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                      title: Text("Alert!"),
+                      content: Text("You have turned on Screen of $userMAC"),
+                      actions: <Widget>[
+                        FlatButton(
+                          onPressed: () {
+                            Navigator.of(ctx).pop();
+                          },
+                          child: Text(""),
+                        ),
+                      ],
+                    ),
+                  );
                 } else if ((selectState == PowerState.turnOff &&
                     result == true)) {
                   print("Screen OFF");
                   mqttClientWrapper.publishMessage("0");
+                  showDialog(
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                      title: Text("Alert!"),
+                      content: Text("You have turned off Screen of $userMAC"),
+                      actions: <Widget>[
+                        FlatButton(
+                          onPressed: () {
+                            Navigator.of(ctx).pop();
+                          },
+                          child: Text(""),
+                        ),
+                      ],
+                    ),
+                  );
                 } else {
+                  showDialog(
+                    context: context,
+                    builder: (ctx) => AlertDialog(
+                      title: Text("Alert!"),
+                      content: Text(
+                          "Enter Valid MacAddress and select on/off state"),
+                      actions: <Widget>[
+                        FlatButton(
+                          onPressed: () {
+                            Navigator.of(ctx).pop();
+                          },
+                          child: Text("Try again"),
+                        ),
+                      ],
+                    ),
+                  );
                   print("enter valid MacAddress or select a state");
                 }
               },
