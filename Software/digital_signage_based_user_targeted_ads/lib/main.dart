@@ -9,6 +9,7 @@ void main() async {
       theme: ThemeData.dark().copyWith(
         primaryColor: Color(0xFF0A0E35),
         scaffoldBackgroundColor: Color(0xFF0A0E21),
+        accentColor: Colors.blueGrey,
         buttonTheme: ButtonThemeData(
           buttonColor: Colors.blueGrey,
           shape: StadiumBorder(),

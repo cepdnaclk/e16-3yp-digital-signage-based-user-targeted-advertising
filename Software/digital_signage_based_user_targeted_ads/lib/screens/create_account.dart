@@ -6,15 +6,15 @@ import 'package:project_api/widgets/header.dart';
 
 import 'home.dart';
 
-class CreateAccountBuyer extends StatefulWidget {
+class CreateAccount extends StatefulWidget {
   final FirebaseUser dispUser;
 
-  CreateAccountBuyer({Key key, @required this.dispUser}) : super(key: key);
+  CreateAccount({Key key, @required this.dispUser}) : super(key: key);
   @override
-  _CreateAccountBuyerState createState() => _CreateAccountBuyerState();
+  _CreateAccountState createState() => _CreateAccountState();
 }
 
-class _CreateAccountBuyerState extends State<CreateAccountBuyer> {
+class _CreateAccountState extends State<CreateAccount> {
   Placemark placemark;
   final _formKey = GlobalKey<FormState>();
 
@@ -159,9 +159,9 @@ class _CreateAccountBuyerState extends State<CreateAccountBuyer> {
                     onSaved: (hn) => homeNumber = hn,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: "Home Number",
+                      labelText: "Shop Number",
                       labelStyle: TextStyle(fontSize: 15.0),
-                      hintText: "Enter your home number",
+                      hintText: "Enter your Shop number",
                     ),
                   ),
                 ),
@@ -213,7 +213,7 @@ class _CreateAccountBuyerState extends State<CreateAccountBuyer> {
                     height: 50.0,
                     width: 200.0,
                     decoration: BoxDecoration(
-                      color: Colors.blue,
+                      color: Colors.blueGrey,
                       borderRadius: BorderRadius.circular(7.0),
                     ),
                     child: Center(

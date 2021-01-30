@@ -25,7 +25,31 @@ class _LoginPageState extends State<LoginPage> {
           key: formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
+              Text(
+                'ESLE SIGNAGE',
+                style: TextStyle(
+                  fontFamily: 'Signatra',
+                  fontSize: 70.0,
+                  color: Theme.of(context).accentColor,
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                width: 250.0,
+                height: 250.0,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/logo.png'),
+                      fit: BoxFit.cover),
+                ),
+              ),
+              SizedBox(
+                height: 40,
+              ),
               Padding(
                   padding: EdgeInsets.only(left: 25.0, right: 25.0),
                   child: TextFormField(
@@ -86,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
       AuthService().signIn(authResult);
     };
 
-      final PhoneVerificationFailed verificationfailed =
+    final PhoneVerificationFailed verificationfailed =
         (AuthException authException) {
       print('${authException.message}');
     };

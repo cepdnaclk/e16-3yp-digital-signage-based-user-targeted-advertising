@@ -197,7 +197,7 @@ class _HomeState extends State<Home> {
   Widget buildAuthScreen() {
     return Scaffold(
       appBar: AppBar(
-        title: Text('DASHBOARD'),
+        title: Text('Dashboard'),
       ),
       drawer: Drawer(
         child: ListView(
@@ -254,7 +254,7 @@ class _HomeState extends State<Home> {
               () => {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Profile()),
+                  MaterialPageRoute(builder: (context) => Profile(profileId: currentUserWithInfo?.id)),
                 ),
               },
             ),
@@ -267,10 +267,9 @@ class _HomeState extends State<Home> {
   Widget buildUnAuthScreen() {
     return Scaffold(
       body: ModalProgressHUD(
-          // color: Colors.blueAccent,
           inAsyncCall: showSpinner,
           child: Container(
-            color: Colors.white,
+            // color: Colors.white,
             alignment: Alignment.center,
             padding: EdgeInsets.only(top: 20.0, bottom: 5.0),
             child: Column(
@@ -278,11 +277,11 @@ class _HomeState extends State<Home> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  'ESLE Signage',
+                  'ESLE SIGNAGE',
                   style: TextStyle(
                     fontFamily: 'Signatra',
                     fontSize: 70.0,
-                    color: Colors.blueAccent,
+                    color: Theme.of(context).accentColor,
                   ),
                 ),
                 SizedBox(
@@ -293,7 +292,7 @@ class _HomeState extends State<Home> {
                   height: 250.0,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage('assets/images/delivery_cab.jpg'),
+                        image: AssetImage('assets/images/logo.png'),
                         fit: BoxFit.cover),
                   ),
                 ),
