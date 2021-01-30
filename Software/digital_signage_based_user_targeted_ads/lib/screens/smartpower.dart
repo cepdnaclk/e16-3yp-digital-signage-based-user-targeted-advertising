@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 //import 'package:firebase_core/firebase_core.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
 
-final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+final  _firestore = Firestore.instance;
 
 class Smartpower extends StatelessWidget {
   @override
@@ -44,20 +44,22 @@ class _PowerPageState extends State<PowerPage> {
   }
 
   Future<bool> validateMAC(String inputMac) async {
-    try {
-      final addresses = await _firestore.collection('MacAddresses').get();
-      for (var mac in addresses.docs) {
-        for (var val in mac.data().values) {
-          if (val == inputMac) {
-            return Future.value(true);
-          }
-        }
-      }
-      return Future.value(false);
-    } on FirebaseException catch (e) {
-      print(e);
-      return Future.value(false);
-    }
+    return Future.value(true);
+
+    // try {
+    //   final addresses = await _firestore.collection('MacAddresses').get();
+    //   for (var mac in addresses.docs) {
+    //     for (var val in mac.data().values) {
+    //       if (val == inputMac) {
+    //         return Future.value(true);
+    //       }
+    //     }
+    //   }
+    //   return Future.value(false);
+    // } on Exception catch (e) {
+    //   print(e);
+    //   return Future.value(false);
+    // }
   }
 
   @override

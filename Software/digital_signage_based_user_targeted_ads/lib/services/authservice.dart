@@ -1,16 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:project_api/screens/homescreen.dart';
+import 'package:project_api/screens/home.dart';
 import 'package:project_api/screens/loginpage.dart';
 
 class AuthService {
   //Handles Auth
   handleAuth() {
     return StreamBuilder(
-        stream: FirebaseAuth.instance.authStateChanges(),
+        stream: FirebaseAuth.instance.onAuthStateChanged,
         builder: (BuildContext context, snapshot) {
           if (snapshot.hasData) {
-            return HomeScreen();
+            return Home();
           } else {
             return LoginPage();
           }
@@ -28,8 +28,8 @@ class AuthService {
   }
 
   signInWithOTP(smsCode, verId) {
-    AuthCredential authCreds =
-        PhoneAuthProvider.credential(verificationId: verId, smsCode: smsCode);
+    AuthCredential authCreds = PhoneAuthProvider.getCredential(
+        verificationId: verId, smsCode: smsCode);
     signIn(authCreds);
   }
 }

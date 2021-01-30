@@ -86,8 +86,8 @@ class _LoginPageState extends State<LoginPage> {
       AuthService().signIn(authResult);
     };
 
-    final PhoneVerificationFailed verificationfailed =
-        (FirebaseAuthException authException) {
+      final PhoneVerificationFailed verificationfailed =
+        (AuthException authException) {
       print('${authException.message}');
     };
 

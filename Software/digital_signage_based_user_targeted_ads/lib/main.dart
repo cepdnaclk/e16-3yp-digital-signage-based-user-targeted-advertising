@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:project_api/services/authservice.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
   runApp(
     MaterialApp(
-      title: "Drawer App",
+      title: "ESLE",
       theme: ThemeData.dark().copyWith(
         primaryColor: Color(0xFF0A0E35),
         scaffoldBackgroundColor: Color(0xFF0A0E21),
@@ -16,8 +14,15 @@ void main() async {
           shape: StadiumBorder(),
         ),
       ),
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false,      
       home: AuthService().handleAuth(),
+
+      // initialRoute: Home.id,
+      // routes: {
+      //   Home.id: (context) => Home(),
+      //   // Profile.id: (context) => Profile(),
+      // },
+
     ),
   );
 }
