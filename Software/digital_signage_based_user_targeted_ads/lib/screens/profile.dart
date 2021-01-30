@@ -1,7 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project_api/models/user.dart';
 import 'package:project_api/screens/edit_profile.dart';
+import 'package:project_api/screens/loginpage.dart';
+import 'package:project_api/services/authservice.dart';
 import 'package:project_api/widgets/header.dart';
 import 'package:project_api/widgets/progress.dart';
 import 'package:project_api/widgets/rounded_btn.dart';
@@ -16,6 +19,9 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+
+  FirebaseAuth _auth = FirebaseAuth.instance;
+
   final String currentUserId = currentUserWithInfo?.id;
 
   bool homeNumber = false;
@@ -181,16 +187,16 @@ class _ProfileState extends State<Profile> {
   }
 
   Future<void> _signOut() async {
-
     await googleSignIn.signOut();
-    // await _auth.signOut();
+    await _auth.signOut();
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('loggedUserId');
 
-    // Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil(Home.id, (Route<dynamic> route) => false);
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+        ModalRoute.withName("/phoneAuth"));
   }
 
   buildProfileButton() {
@@ -223,7 +229,10 @@ class _ProfileState extends State<Profile> {
         ],
       );
     } else {
-      return SizedBox(height: 1,width: 1,);
+      return SizedBox(
+        height: 1,
+        width: 1,
+      );
     }
   }
 
