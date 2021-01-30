@@ -9,7 +9,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('DIGITAL SIGNAGE'),
+        title: Text('DASHBOARD'),
       ),
       drawer: Drawer(
         child: ListView(
@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
               () => {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Dashboard()),
+                  MaterialPageRoute(builder: (context) => HomeScreen()),
                 ),
               },
             ),
