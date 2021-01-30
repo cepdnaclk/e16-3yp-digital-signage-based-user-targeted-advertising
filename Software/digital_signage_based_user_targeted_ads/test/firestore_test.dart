@@ -1,6 +1,3 @@
-//import 'package:cloud_firestore/cloud_firestore.dart';
-//import 'package:flutter_test/flutter_test.dart';
-//import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:cloud_firestore_mocks/cloud_firestore_mocks.dart';
 
@@ -23,13 +20,14 @@ void main() {
       await collectionRef.add(data3);
 
       // assert
-      final addresses = await instance.collection('MacAddresses').get();
+      final addresses =
+          await instance.collection('MacAddresses').getDocuments();
       String inputMac = "1010";
       bool macExist = false;
 
-      //print(instance.dump());
-      for (var mac in addresses.docs) {
-        for (var val in mac.data().values) {
+      print(instance.dump());
+      for (var mac in addresses.documents) {
+        for (var val in mac.data.values) {
           if (val == inputMac) {
             macExist = true;
             break;

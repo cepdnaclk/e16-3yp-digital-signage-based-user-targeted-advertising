@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-//import 'package:project_api/services/launchurl.dart';
-//import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:project_api/adslides.dart';
+import 'package:project_api/services/web_view_container.dart';
 
 class Usertarget extends StatefulWidget {
   @override
@@ -13,32 +13,13 @@ class _UsertargetState extends State<Usertarget> {
   List<Gender> genders = new List<Gender>();
   List<Age> ages = new List<Age>();
 
-  List<List<String>> adSlides = [
-    [
-      'https://docs.google.com/presentation/d/12jNj9pCAosO-LXFWNS2VTySHJB61BQDLRH1-1h381zI/edit?usp=sharing',
-      'https://docs.google.com/presentation/d/1xFO-aSyLuq5-O3ElnLB8lB1ABHE98RFGutrSGo8IjRg/edit?usp=sharing',
-      'https://docs.google.com/presentation/d/1VpC_xHnGj1NV1UjERUHMFmwQRRl28Ji8_CWh6Rr0Xec/edit?usp=sharing',
-      'https://docs.google.com/presentation/d/12jNj9pCAosO-LXFWNS2VTySHJB61BQDLRH1-1h381zI/edit?usp=sharing',
-      'https://docs.google.com/presentation/d/12jNj9pCAosO-LXFWNS2VTySHJB61BQDLRH1-1h381zI/edit?usp=sharing',
-    ],
-    [
-      'https://docs.google.com/presentation/d/12jNj9pCAosO-LXFWNS2VTySHJB61BQDLRH1-1h381zI/edit?usp=sharing',
-      'https://docs.google.com/presentation/d/1cG2iULk3q7KgUI0QjtiVSp01b_W2lKqOlkjcq_xBCTY/edit?usp=sharing',
-      'https://docs.google.com/presentation/d/18mXHQnWnD4OtAoFxjWrKU1tUR6nBWWHMppH2fQKyvio/edit?usp=sharing',
-      'https://docs.google.com/presentation/d/12jNj9pCAosO-LXFWNS2VTySHJB61BQDLRH1-1h381zI/edit?usp=sharing',
-      'https://docs.google.com/presentation/d/12jNj9pCAosO-LXFWNS2VTySHJB61BQDLRH1-1h381zI/edit?usp=sharing',
-    ],
-    [
-      'https://docs.google.com/presentation/d/10VU4WIn163E-MkUOuPLyUH6CcqbyXez7DnOXxoo4ufw/edit?usp=sharing'
-    ]
-  ];
-
-  int genderActiveIndex;
+  int genderActiveIndex = 0;
   int ageActiveIndex = 5;
   String currentURL;
+  String currentPreview;
 
   _launchURL(int index1, int index2) async {
-    currentURL = adSlides[index1][index2];
+    currentURL = Adlist().selectAd(index1, index2);
 
     if (await canLaunch(currentURL)) {
       await launch(currentURL);
@@ -47,25 +28,19 @@ class _UsertargetState extends State<Usertarget> {
     }
     print("success!!!");
   }
-  /*
-  Future<void> _launchApps(String url) async {
-    if (await canLaunch(url)) {
-      final bool appLaunchSuccess = await launch(
-        url,
-        forceSafariVC: false,
-        forceWebView: true,
-      );
-      if(!appLaunchSuccess){
-        await launch(url,forceSafariVC: true)
-      }
-    } 
+
+  void _handleURLButtonPress(BuildContext context, int index1, int index2) {
+    currentPreview = Adlist().selectPreview(index1, index2);
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => WebViewContainer(currentPreview)));
   }
-  */
 
   @override
   void initState() {
     super.initState();
-    genders.add(new Gender("Male", FontAwesomeIcons.male, false));
+    genders.add(new Gender("Male", FontAwesomeIcons.male, true));
     genders.add(new Gender("Female", FontAwesomeIcons.female, false));
     genders.add(new Gender("Generic", FontAwesomeIcons.users, false));
 
@@ -74,6 +49,8 @@ class _UsertargetState extends State<Usertarget> {
     ages.add(new Age("38 - 43", FontAwesomeIcons.peopleArrows, false));
     ages.add(new Age("48 - 53", FontAwesomeIcons.peopleArrows, false));
     ages.add(new Age("60 - 100", FontAwesomeIcons.peopleArrows, false));
+
+    CustomRadio(genders[0]);
   }
 
   @override
@@ -83,6 +60,7 @@ class _UsertargetState extends State<Usertarget> {
         title: Text("Create assets"),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
             alignment: Alignment.centerLeft,
@@ -176,9 +154,10 @@ class _UsertargetState extends State<Usertarget> {
                     child: Column(
                       children: [
                         Container(
-                          alignment: Alignment.center,
+                          alignment: Alignment.centerLeft,
+                          padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                           child: Text(
-                            'Add advertisements',
+                            'Add new assets',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 25,
@@ -186,35 +165,97 @@ class _UsertargetState extends State<Usertarget> {
                             ),
                           ),
                         ),
-                        Container(
-                          padding: const EdgeInsets.all(10.0),
-                          alignment: Alignment.center,
-                          child: RaisedButton(
-                            onPressed: () {
-                              if (ageActiveIndex != 5) {
-                                _launchURL(genderActiveIndex, ageActiveIndex);
-                              } else {
-                                showDialog(
-                                  context: context,
-                                  builder: (ctx) => AlertDialog(
-                                    title: Text("Alert!"),
-                                    content: Text("Select age category"),
-                                    actions: <Widget>[
-                                      FlatButton(
-                                        onPressed: () {
-                                          Navigator.of(ctx).pop();
-                                        },
-                                        child: Text("Try again"),
+                        Row(
+                          //crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(10.0),
+                              alignment: Alignment.centerLeft,
+                              child: RaisedButton(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(10.0))),
+                                onPressed: () {
+                                  if (ageActiveIndex != 5) {
+                                    _launchURL(
+                                        genderActiveIndex, ageActiveIndex);
+                                  } else {
+                                    showDialog(
+                                      context: context,
+                                      builder: (ctx) => AlertDialog(
+                                        title: Text("Alert!"),
+                                        content: Text("Select age category"),
+                                        actions: <Widget>[
+                                          FlatButton(
+                                            onPressed: () {
+                                              Navigator.of(ctx).pop();
+                                            },
+                                            child: Text("Try again"),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                );
-                              }
-                            },
-                            color: Colors.blueAccent,
-                            textColor: Colors.white,
-                            child: Text('Open Google Slides'),
-                          ),
+                                    );
+                                  }
+                                },
+                                color: Colors.blueAccent,
+                                textColor: Colors.white,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                                      child: Text(
+                                        "Add assets",
+                                        style: TextStyle(fontSize: 20.0),
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.fromLTRB(5, 5, 0, 5),
+                                      child: Icon(
+                                        Icons.add,
+                                        size: 30.0,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(20, 10, 10, 5),
+                              alignment: Alignment.center,
+                              child: RaisedButton(
+                                onPressed: () {
+                                  if (ageActiveIndex != 5) {
+                                    _handleURLButtonPress(context,
+                                        genderActiveIndex, ageActiveIndex);
+                                  } else {
+                                    showDialog(
+                                      context: context,
+                                      builder: (ctx) => AlertDialog(
+                                        title: Text("Alert!"),
+                                        content: Text("Select age category"),
+                                        actions: <Widget>[
+                                          FlatButton(
+                                            onPressed: () {
+                                              Navigator.of(ctx).pop();
+                                            },
+                                            child: Text("Try again"),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }
+                                },
+                                color: Colors.blueGrey,
+                                textColor: Colors.white,
+                                child: Text(
+                                  'Watch preview',
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
