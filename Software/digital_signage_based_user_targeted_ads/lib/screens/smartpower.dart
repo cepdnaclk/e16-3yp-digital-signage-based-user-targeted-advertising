@@ -13,7 +13,7 @@ class Smartpower extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Smart Power Control"),
+        title: Text("Smart Power Supply"),
       ),
       body: PowerPage(),
     );
