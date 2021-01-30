@@ -15,24 +15,26 @@ class _UsertargetState extends State<Usertarget> {
 
   List<List<String>> adSlides = [
     [
-      'https://docs.google.com/presentation/d/e/2PACX-1vSHoOqh7MRh0sXSDp4COp6PI0jo1WoJY9w-pREuBykJTEwF0MyUFZCOQcCKIjyD3yvmEZpqNRNcr8PR/pub?start=true&loop=true&delayms=3000',
-      'http://www.google.lk',
-      'http://www.youtube.com',
-      'https://pinterest.com',
-      'https://www.yahoo.com',
+      'https://docs.google.com/presentation/d/12jNj9pCAosO-LXFWNS2VTySHJB61BQDLRH1-1h381zI/edit?usp=sharing',
+      'https://docs.google.com/presentation/d/1xFO-aSyLuq5-O3ElnLB8lB1ABHE98RFGutrSGo8IjRg/edit?usp=sharing',
+      'https://docs.google.com/presentation/d/1VpC_xHnGj1NV1UjERUHMFmwQRRl28Ji8_CWh6Rr0Xec/edit?usp=sharing',
+      'https://docs.google.com/presentation/d/12jNj9pCAosO-LXFWNS2VTySHJB61BQDLRH1-1h381zI/edit?usp=sharing',
+      'https://docs.google.com/presentation/d/12jNj9pCAosO-LXFWNS2VTySHJB61BQDLRH1-1h381zI/edit?usp=sharing',
     ],
     [
-      'https://github.com',
-      'https://brilliant.org',
-      'https://www.seedr.cc',
-      'https://www.wikipedia.org',
-      'https://www.encyclopedia.com',
+      'https://docs.google.com/presentation/d/12jNj9pCAosO-LXFWNS2VTySHJB61BQDLRH1-1h381zI/edit?usp=sharing',
+      'https://docs.google.com/presentation/d/1cG2iULk3q7KgUI0QjtiVSp01b_W2lKqOlkjcq_xBCTY/edit?usp=sharing',
+      'https://docs.google.com/presentation/d/18mXHQnWnD4OtAoFxjWrKU1tUR6nBWWHMppH2fQKyvio/edit?usp=sharing',
+      'https://docs.google.com/presentation/d/12jNj9pCAosO-LXFWNS2VTySHJB61BQDLRH1-1h381zI/edit?usp=sharing',
+      'https://docs.google.com/presentation/d/12jNj9pCAosO-LXFWNS2VTySHJB61BQDLRH1-1h381zI/edit?usp=sharing',
     ],
-    ['http://www.sundaytimes.lk']
+    [
+      'https://docs.google.com/presentation/d/10VU4WIn163E-MkUOuPLyUH6CcqbyXez7DnOXxoo4ufw/edit?usp=sharing'
+    ]
   ];
 
   int genderActiveIndex;
-  int ageActiveIndex = 3;
+  int ageActiveIndex = 5;
   String currentURL;
 
   _launchURL(int index1, int index2) async {
@@ -78,7 +80,7 @@ class _UsertargetState extends State<Usertarget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Create schedules"),
+        title: Text("Create assets"),
       ),
       body: Column(
         children: [
@@ -116,7 +118,7 @@ class _UsertargetState extends State<Usertarget> {
                             ages.forEach((age) => age.isSelected = false);
                             CustomRadio1(ages[index]);
                             if (index != 2) {
-                              ageActiveIndex = 3;
+                              ageActiveIndex = 5;
                             } else {
                               ageActiveIndex = 0;
                             }
@@ -189,7 +191,7 @@ class _UsertargetState extends State<Usertarget> {
                           alignment: Alignment.center,
                           child: RaisedButton(
                             onPressed: () {
-                              if (ageActiveIndex != 3) {
+                              if (ageActiveIndex != 5) {
                                 _launchURL(genderActiveIndex, ageActiveIndex);
                               } else {
                                 showDialog(
