@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:project_api/models/user.dart';
 import 'package:project_api/screens/edit_profile.dart';
 import 'package:project_api/screens/loginpage.dart';
-import 'package:project_api/services/authservice.dart';
 import 'package:project_api/widgets/header.dart';
 import 'package:project_api/widgets/progress.dart';
 import 'package:project_api/widgets/rounded_btn.dart';

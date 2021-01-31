@@ -4,6 +4,7 @@ import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:project_api/screens/create_account.dart';
+import 'package:project_api/screens/powerSupply.dart';
 import 'package:project_api/screens/smartpower.dart';
 import 'package:project_api/screens/usertarget.dart';
 import 'package:project_api/screens/profile.dart';
@@ -15,9 +16,13 @@ import 'package:project_api/services/web_view_container.dart';
 
 final shopsRef = Firestore.instance.collection('shop details');
 
+//get server timestamp
 final int timestamp = DateTime.now().millisecondsSinceEpoch;
 
 final userRef = Firestore.instance.collection('users');
+final powerSupplyRef = Firestore.instance.collection('power supply units');
+final signageUnitRef = Firestore.instance.collection('signage units');
+
 final GoogleSignIn googleSignIn = GoogleSignIn();
 FirebaseAuth _auth;
 User currentUserWithInfo;
@@ -248,7 +253,7 @@ class _HomeState extends State<Home> {
               () => {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Smartpower()),
+                  MaterialPageRoute(builder: (context) => PowerSupply()),
                 ),
               },
             ),
