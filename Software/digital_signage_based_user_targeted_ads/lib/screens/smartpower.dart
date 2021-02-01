@@ -1,19 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:project_api/components/showToast.dart';
+import 'package:project_api/screens/home.dart';
+import 'package:project_api/widgets/rounded_btn.dart';
 import '../constants.dart';
 import 'package:project_api/mqttClient/mqttclient.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-//import 'package:firebase_core/firebase_core.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
-
-final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
 class Smartpower extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Smart Power Control"),
+        title: Text("Smart Power Supply"),
       ),
       body: PowerPage(),
     );
@@ -31,33 +30,117 @@ class PowerPage extends StatefulWidget {
 }
 
 class _PowerPageState extends State<PowerPage> {
+  final macKey = GlobalKey<FormState>();
+
   PowerState selectState;
   final MQTTClientWrapper mqttClientWrapper = new MQTTClientWrapper();
 
-  TextEditingController macAddress = new TextEditingController();
-
-  String userMAC = "";
+  String deviceMAC = "";
   bool result;
+  bool isVeryfied;
 
-  void setup() {
-    mqttClientWrapper.prepareMqttClient(userMAC);
+  setupDevice() {
+    mqttClientWrapper.prepareMqttClient(deviceMAC);
   }
 
-  Future<bool> validateMAC(String inputMac) async {
+  Future<bool> validateMAC() async {
     try {
-      final addresses = await _firestore.collection('MacAddresses').get();
-      for (var mac in addresses.docs) {
-        for (var val in mac.data().values) {
-          if (val == inputMac) {
-            return Future.value(true);
-          }
-        }
+      DocumentSnapshot documentSnapshot =
+          await powerSupplyRef.document(deviceMAC).get();
+
+      if (documentSnapshot.exists) {
+        return Future.value(true);
+      } else {
+        return Future.value(false);
       }
-      return Future.value(false);
-    } on FirebaseException catch (e) {
+    } on Exception catch (e) {
       print(e);
       return Future.value(false);
     }
+  }
+
+  addDevice() async {
+    final form = macKey.currentState;
+    form.save();
+    if (form.validate()) {
+      if (await validateMAC()) {
+        setState(() {
+          setupDevice();
+          showToast(message: "Device added successfully");
+          powerSupplyRef.document(deviceMAC).setData({
+            "isVeryfied": true,
+            "activeStatus": false,
+            "deviceMAC": deviceMAC,
+            "customerID": currentUserWithInfo?.id,
+            "timestamp": timestamp,
+          });
+        });
+      }else{
+        showToast(message: "Please check the internet connectivity");
+      }
+    } else {
+      showToast(message: "Please check the Serial number again");
+    }
+  }
+
+  removeDevice() {}
+
+  editDevices() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Form(
+          key: macKey,
+          autovalidateMode: AutovalidateMode.always,
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: TextFormField(
+              validator: (val) {
+                if ((0 < val.trim().length && 4 > val.trim().length) ||
+                    val.trim().length > 4) {
+                  return "Enter a valid Serial";
+                } else {
+                  return null;
+                }
+              },
+              onSaved: (val) => deviceMAC = val,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: "Enter Device Serial",
+                labelStyle: TextStyle(fontSize: 15.0),
+                hintText: "serial number",
+              ),
+            ),
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0.0),
+              child: RoundedButton(
+                title: 'Delete Device',
+                minWidth: 75.0,
+                height: 25.0,
+                color: Colors.redAccent,
+                onPressed: removeDevice,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0.0),
+              child: RoundedButton(
+                title: 'Add Device',
+                minWidth: 75.0,
+                height: 25.0,
+                color: Theme.of(context).accentColor,
+                onPressed: addDevice,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
   }
 
   @override
@@ -66,68 +149,7 @@ class _PowerPageState extends State<PowerPage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.fromLTRB(20, 10, 20, 2),
-            child: TextFormField(
-              controller: macAddress,
-              maxLength: 4,
-              decoration: InputDecoration(
-                labelText: 'MAC Address',
-                border: OutlineInputBorder(),
-              ),
-            ),
-          ),
-          Container(
-            alignment: Alignment.center,
-            child: MaterialButton(
-              onPressed: () async {
-                userMAC = macAddress.text;
-                result = await validateMAC(userMAC);
-                setState(() {
-                  if (result == true) {
-                    showDialog(
-                      context: context,
-                      builder: (ctx) => AlertDialog(
-                        title: Text("Alert!"),
-                        content: Text("Valid Mac Address"),
-                        actions: <Widget>[
-                          FlatButton(
-                            onPressed: () {
-                              Navigator.of(ctx).pop();
-                            },
-                            child: Text("continue"),
-                          ),
-                        ],
-                      ),
-                    );
-                    setup();
-                    //print("valid MacAddress  - $userMAC ");
-                  } else {
-                    showDialog(
-                      context: context,
-                      builder: (ctx) => AlertDialog(
-                        title: Text("Alert!"),
-                        content: Text("Invalid Mac Address"),
-                        actions: <Widget>[
-                          FlatButton(
-                            onPressed: () {
-                              Navigator.of(ctx).pop();
-                            },
-                            child: Text("try again"),
-                          ),
-                        ],
-                      ),
-                    );
-                    //print("Invalid Mac Address");
-                    selectState = null;
-                  }
-                });
-              },
-              color: Colors.blueAccent,
-              textColor: Colors.white,
-              child: Text('Submit'),
-            ),
-          ),
+          editDevices(),
           Expanded(
             flex: 4,
             child: ReusableCard(
@@ -158,7 +180,7 @@ class _PowerPageState extends State<PowerPage> {
                 });
               },
               colour: selectState == PowerState.turnOff
-                  ? kActiveCardColourOFF
+                  ? kInactiveCardColour
                   : kInactiveCardColour,
               cardChild: IconContent(
                 icon: FontAwesomeIcons.powerOff,
@@ -166,6 +188,9 @@ class _PowerPageState extends State<PowerPage> {
               ),
             ),
           ),
+
+
+
           Padding(
             padding: EdgeInsets.all(10),
             child: FloatingActionButton.extended(
@@ -177,7 +202,7 @@ class _PowerPageState extends State<PowerPage> {
                     context: context,
                     builder: (ctx) => AlertDialog(
                       title: Text("Alert!"),
-                      content: Text("You have turned on Screen of $userMAC"),
+                      content: Text("You have turned on Screen of $deviceMAC"),
                       actions: <Widget>[
                         FlatButton(
                           onPressed: () {
@@ -196,7 +221,7 @@ class _PowerPageState extends State<PowerPage> {
                     context: context,
                     builder: (ctx) => AlertDialog(
                       title: Text("Alert!"),
-                      content: Text("You have turned off Screen of $userMAC"),
+                      content: Text("You have turned off Screen of $deviceMAC"),
                       actions: <Widget>[
                         FlatButton(
                           onPressed: () {
