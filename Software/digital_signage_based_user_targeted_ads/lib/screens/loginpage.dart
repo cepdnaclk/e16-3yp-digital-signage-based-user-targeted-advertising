@@ -4,6 +4,8 @@ import 'package:project_api/services/authservice.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class LoginPage extends StatefulWidget {
+  static const String id = "phoneAuth";
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }

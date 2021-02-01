@@ -81,7 +81,7 @@ class _CreateAccountState extends State<CreateAccount> {
         children: <Widget>[
           Form(
             key: _formKey,
-            autovalidate: true,
+            autovalidateMode: AutovalidateMode.always,
             child: Column(
               children: <Widget>[
                 Padding(

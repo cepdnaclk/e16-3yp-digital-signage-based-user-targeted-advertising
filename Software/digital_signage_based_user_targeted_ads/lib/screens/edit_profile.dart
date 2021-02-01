@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 import 'package:project_api/models/user.dart';
+import 'package:project_api/screens/loginpage.dart';
 import 'package:project_api/widgets/progress.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -267,9 +268,10 @@ class _EditProfileState extends State<EditProfile> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('loggedUserId');
 
-    // Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil(Home.id, (Route<dynamic> route) => false);
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+        ModalRoute.withName("/phoneAuth"));
   }
 
   @override
