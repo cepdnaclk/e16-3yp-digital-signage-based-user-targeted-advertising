@@ -23,7 +23,8 @@ final int timestamp = DateTime.now().millisecondsSinceEpoch;
 final userRef = Firestore.instance.collection('users');
 final powerSupplyRef = Firestore.instance.collection('power supply units');
 final signageUnitRef = Firestore.instance.collection('signage units');
-final issuedPwrSupplyRef = Firestore.instance.collection('issued power supply units');
+final issuedPwrSupplyRef =
+    Firestore.instance.collection('issued power supply units');
 final issuedSignageRef = Firestore.instance.collection('issued signage units');
 
 final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -208,8 +209,7 @@ class _HomeState extends State<Home> {
 
   Widget buildAuthScreen() {
     return Scaffold(
-      appBar: header(context,
-          titleText: "Dashboard", removeBackbtn: false),
+      appBar: header(context, titleText: "Dashboard", removeBackbtn: false),
       drawer: Drawer(
         child: ListView(
           children: [
@@ -275,170 +275,173 @@ class _HomeState extends State<Home> {
         ),
       ),
       body: SafeArea(
-          child: SingleChildScrollView(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-            Container(
-              padding: EdgeInsets.all(10),
-              alignment: Alignment.center,
-              child: Text('Currently playing assets',
-                  style: TextStyle(
-                      fontSize: 25,
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.w600)),
-            ),
-            Container(
-                color: Color(0xFF848484),
-                height: 100,
-                margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(20, 5, 40, 5),
-                        //width: c_width,
-                        child: new Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            new Text(
-                              "Age 25-32",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  fontSize: 25, fontStyle: FontStyle.italic),
-                            ),
-                            new Text(
-                              "female target Ads",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Column(children: <Widget>[
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.all(10),
+                alignment: Alignment.center,
+                child: Text('Currently playing assets',
+                    style: TextStyle(
+                        fontSize: 25,
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.w600)),
+              ),
+              Container(
+                  color: Color(0xFF848484),
+                  height: 100,
+                  margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
                         Container(
-                          padding: EdgeInsets.fromLTRB(40, 15, 20, 2),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Preview',
-                            style: TextStyle(
-                                fontSize: 20, fontStyle: FontStyle.italic),
+                          padding: const EdgeInsets.fromLTRB(20, 5, 40, 5),
+                          //width: c_width,
+                          child: new Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              new Text(
+                                "Age 25-32",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    fontSize: 25, fontStyle: FontStyle.italic),
+                              ),
+                              new Text(
+                                "female target Ads",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ],
                           ),
                         ),
-                        IconButton(
-                          icon: Icon(
-                            Icons.arrow_forward,
-                            size: 40,
-                          ),
-                          onPressed: () => _handleURLButtonPress(context,
-                              'https://docs.google.com/presentation/d/e/2PACX-1vQSfEVaOqFgEW3dI1A6mcAMeWv6IWRlgEssaTYSBJ3F-aVEouapLdUCLK-rdcHAp5hkswqSDmZqenCG/pub?start=true&loop=true&delayms=3000'),
-                        ),
-                        SizedBox(
-                          height: 2,
-                        ),
-                      ])
-                    ])),
-            Container(
-                color: Color(0xFF848484),
-                height: 100,
-                margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(20, 5, 40, 5),
-                        //width: c_width,
-                        child: new Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            new Text(
-                              "Age 25-32",
-                              textAlign: TextAlign.left,
+                        Column(children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.fromLTRB(40, 15, 20, 2),
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Preview',
                               style: TextStyle(
-                                  fontSize: 25, fontStyle: FontStyle.italic),
+                                  fontSize: 20, fontStyle: FontStyle.italic),
                             ),
-                            new Text(
-                              "male target Ads",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(fontSize: 20),
+                          ),
+                          IconButton(
+                            icon: Icon(
+                              Icons.arrow_forward,
+                              size: 40,
                             ),
-                          ],
-                        ),
-                      ),
-                      Column(children: <Widget>[
+                            onPressed: () => _handleURLButtonPress(context,
+                                'https://docs.google.com/presentation/d/e/2PACX-1vQSfEVaOqFgEW3dI1A6mcAMeWv6IWRlgEssaTYSBJ3F-aVEouapLdUCLK-rdcHAp5hkswqSDmZqenCG/pub?start=true&loop=true&delayms=3000'),
+                          ),
+                          SizedBox(
+                            height: 2,
+                          ),
+                        ])
+                      ])),
+              Container(
+                  color: Color(0xFF848484),
+                  height: 100,
+                  margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
                         Container(
-                          padding: EdgeInsets.fromLTRB(40, 15, 20, 2),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Preview',
-                            style: TextStyle(
-                                fontSize: 20, fontStyle: FontStyle.italic),
+                          padding: const EdgeInsets.fromLTRB(20, 5, 40, 5),
+                          //width: c_width,
+                          child: new Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              new Text(
+                                "Age 25-32",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    fontSize: 25, fontStyle: FontStyle.italic),
+                              ),
+                              new Text(
+                                "male target Ads",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ],
                           ),
                         ),
-                        IconButton(
-                          icon: Icon(
-                            Icons.arrow_forward,
-                            size: 40,
-                          ),
-                          onPressed: () => _handleURLButtonPress(context,
-                              'https://docs.google.com/presentation/d/e/2PACX-1vQ_08Rg6fD76TwWhCkZtpcnZV9fenokNVFS3qZB_ET4VT_XRwbJ8m6glftXxO_KkesJjI3hSSwshBwy/pub?start=true&loop=true&delayms=3000'),
-                        ),
-                        SizedBox(
-                          height: 2,
-                        ),
-                      ])
-                    ])),
-            Container(
-                color: Color(0xFF848484),
-                height: 100,
-                margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(20, 5, 40, 5),
-                        child: new Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            new Text(
-                              "Age All",
-                              textAlign: TextAlign.left,
+                        Column(children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.fromLTRB(40, 15, 20, 2),
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Preview',
                               style: TextStyle(
-                                  fontSize: 25, fontStyle: FontStyle.italic),
+                                  fontSize: 20, fontStyle: FontStyle.italic),
                             ),
-                            new Text(
-                              "generic target Ads",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(fontSize: 20),
+                          ),
+                          IconButton(
+                            icon: Icon(
+                              Icons.arrow_forward,
+                              size: 40,
                             ),
-                          ],
-                        ),
-                      ),
-                      Column(children: <Widget>[
+                            onPressed: () => _handleURLButtonPress(context,
+                                'https://docs.google.com/presentation/d/e/2PACX-1vQ_08Rg6fD76TwWhCkZtpcnZV9fenokNVFS3qZB_ET4VT_XRwbJ8m6glftXxO_KkesJjI3hSSwshBwy/pub?start=true&loop=true&delayms=3000'),
+                          ),
+                          SizedBox(
+                            height: 2,
+                          ),
+                        ])
+                      ])),
+              Container(
+                  color: Color(0xFF848484),
+                  height: 100,
+                  margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
                         Container(
-                          padding: EdgeInsets.fromLTRB(40, 15, 20, 2),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Preview',
-                            style: TextStyle(
-                                fontSize: 20, fontStyle: FontStyle.italic),
+                          padding: const EdgeInsets.fromLTRB(20, 5, 40, 5),
+                          child: new Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              new Text(
+                                "Age All",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    fontSize: 25, fontStyle: FontStyle.italic),
+                              ),
+                              new Text(
+                                "generic target Ads",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ],
                           ),
                         ),
-                        IconButton(
-                          icon: Icon(
-                            Icons.arrow_forward,
-                            size: 40,
+                        Column(children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.fromLTRB(40, 15, 20, 2),
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Preview',
+                              style: TextStyle(
+                                  fontSize: 20, fontStyle: FontStyle.italic),
+                            ),
                           ),
-                          onPressed: () => _handleURLButtonPress(context,
-                              'https://docs.google.com/presentation/d/e/2PACX-1vT_jiaWYIqNXIomiqOHcT3mERf-lxJsin-Q4tOK4bxejttQ190wiQCcbdEcSSw7YyNzbOrAlCaaM7Sm/pub?start=true&loop=true&delayms=3000'),
-                        ),
-                        SizedBox(
-                          height: 2,
-                        ),
-                      ])
-                    ])),
-          ]))),
+                          IconButton(
+                            icon: Icon(
+                              Icons.arrow_forward,
+                              size: 40,
+                            ),
+                            onPressed: () => _handleURLButtonPress(context,
+                                'https://docs.google.com/presentation/d/e/2PACX-1vT_jiaWYIqNXIomiqOHcT3mERf-lxJsin-Q4tOK4bxejttQ190wiQCcbdEcSSw7YyNzbOrAlCaaM7Sm/pub?start=true&loop=true&delayms=3000'),
+                          ),
+                          SizedBox(
+                            height: 2,
+                          ),
+                        ])
+                      ])),
+            ],
+          ),
+        ),
+      ),
     );
   }
 

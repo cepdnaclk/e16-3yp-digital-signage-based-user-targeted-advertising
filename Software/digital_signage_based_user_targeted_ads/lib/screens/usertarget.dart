@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:project_api/components/showToast.dart';
+import 'package:project_api/constants.dart';
 import 'package:project_api/widgets/header.dart';
 import 'package:project_api/widgets/rounded_btn.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -14,9 +15,16 @@ class Usertarget extends StatefulWidget {
   _UsertargetState createState() => _UsertargetState();
 }
 
+enum UserTargetState {
+  turnOn,
+  turnOff,
+}
+
 class _UsertargetState extends State<Usertarget> {
   final rpiKey = GlobalKey<FormState>();
   String deviceMAC = "";
+  bool userTargettingState;
+  UserTargetState selectState;
 
   String selectedSignageUnit;
 
@@ -105,8 +113,8 @@ class _UsertargetState extends State<Usertarget> {
           signageUnitRef.document(deviceMAC).setData({
             "isUserTargeting": false,
             // "deviceMAC": deviceMAC,
-            // "customerID": currentUserWithInfo?.id,
-            // "timestamp": timestamp,
+            "customerID": currentUserWithInfo?.id,
+            "timestamp": timestamp,
           });
         });
       } else {
@@ -198,301 +206,342 @@ class _UsertargetState extends State<Usertarget> {
     return Scaffold(
       appBar:
           header(context, titleText: "Control Assets", removeBackbtn: false),
-      body:
-          ListView(
-            children: <Widget>[
+      body: ListView(
+        children: <Widget>[
           Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 25.0,
-          ),
-          StreamBuilder<QuerySnapshot>(
-            stream: signageUnitRef.snapshots(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData)
-                const Text("Loading.....");
-              else {
-                List<DropdownMenuItem> pwrSupplies = [];
-                for (int i = 0; i < snapshot.data.documents.length; i++) {
-                  DocumentSnapshot snap = snapshot.data.documents[i];
-                  pwrSupplies.add(
-                    DropdownMenuItem(
-                      child: Text(
-                        snap.documentID,
-                        style: TextStyle(color: Colors.blue),
-                      ),
-                      value: "${snap.documentID}",
-                    ),
-                  );
-                }
-                var selectedDoc = snapshot.data.documents.firstWhere(
-                  (doc) => doc.documentID == selectedSignageUnit,
-                  orElse: () => null,
-                );
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Icon(FontAwesomeIcons.desktop,
-                        size: 25.0, color: Colors.blue),
-                    SizedBox(width: 50.0),
-                    DropdownButton(
-                      items: pwrSupplies,
-                      onChanged: (signageUnitName) {
-                        final snackBar = SnackBar(
-                          content: Text(
-                            'Selected signage unit is $signageUnitName',
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 25.0,
+              ),
+              StreamBuilder<QuerySnapshot>(
+                stream: signageUnitRef.snapshots(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData)
+                    const Text("Loading.....");
+                  else {
+                    List<DropdownMenuItem> pwrSupplies = [];
+                    for (int i = 0; i < snapshot.data.documents.length; i++) {
+                      DocumentSnapshot snap = snapshot.data.documents[i];
+                      pwrSupplies.add(
+                        DropdownMenuItem(
+                          child: Text(
+                            snap.documentID,
                             style: TextStyle(color: Colors.blue),
                           ),
-                        );
-                        Scaffold.of(context).showSnackBar(snackBar);
-                        setState(() {
-                          selectedSignageUnit = signageUnitName;
-                        });
-                        // setupDevice(signageUnitName);
-                        //get device power status
-                        // signageUnitRef
-                        //     .document(signageUnitName)
-                        //     .get()
-                        //     .then((value) {
-                        //   pwrState = value["isUserTargeting"];
-
-                        //   if (pwrState == true) {
-                        //     setState(() {
-                        //       selectState = PowerState.turnOn;
-                        //     });
-                        //   } else {
-                        //     setState(() {
-                        //       selectState = PowerState.turnOff;
-                        //     });
-                        //   }
-                        // });
-                      },
-                      value: selectedDoc?.documentID,
-                      isExpanded: false,
-                      hint: new Text(
-                        "Choose Signage Device",
-                        style: TextStyle(color: Colors.blue),
-                      ),
-                    ),
-                  ],
-                );
-              }
-            },
-          ),
-
-          editDevices(),
-
-          Container(
-            alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
-            child: Text(
-              'Select Gender category',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 500.0,
-            child: Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: ListView.builder(
-                      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      itemCount: genders.length,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          //splashColor: Colors.blue,
-                          onTap: () {
-                            setState(() {
-                              genders.forEach(
-                                  (gender) => gender.isSelected = false);
-                              //if (index == 2) {
-                              ages.forEach((age) => age.isSelected = false);
-                              CustomRadio1(ages[index]);
-                              if (index != 2) {
-                                ageActiveIndex = 5;
-                              } else {
-                                ageActiveIndex = 0;
-                              }
-                              //}
-                              genders[index].isSelected = true;
-                              genderActiveIndex = index;
-                              //print("Current Index = $index ");
-                            });
-                          },
-                          child: CustomRadio(genders[index]),
-                        );
-                      },
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
-                    child: Text(
-                      'Select Age category',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: ListView.builder(
-                      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      itemCount: ages.length,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () {
-                            setState(() {
-                              ages.forEach((age) => age.isSelected = false);
-                              if (genderActiveIndex != 2) {
-                                ages[index].isSelected = true;
-                                ageActiveIndex = index;
-                              } else {
-                                ageActiveIndex = 0;
-                              }
-                            });
-                          },
-                          child: CustomRadio1(ages[index]),
-                        );
-                      },
-                    ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
-                      child: Column(
-                        children: [
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                            child: Text(
-                              'Add new assets',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold,
+                          value: "${snap.documentID}",
+                        ),
+                      );
+                    }
+                    var selectedDoc = snapshot.data.documents.firstWhere(
+                      (doc) => doc.documentID == selectedSignageUnit,
+                      orElse: () => null,
+                    );
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(FontAwesomeIcons.desktop,
+                            size: 25.0, color: Colors.blue),
+                        SizedBox(width: 50.0),
+                        DropdownButton(
+                          items: pwrSupplies,
+                          onChanged: (signageUnitName) {
+                            final snackBar = SnackBar(
+                              content: Text(
+                                'Selected signage unit is $signageUnitName',
+                                style: TextStyle(color: Colors.blue),
                               ),
-                            ),
+                            );
+                            Scaffold.of(context).showSnackBar(snackBar);
+                            setState(() {
+                              selectedSignageUnit = signageUnitName;
+                            });
+                            // setupDevice(signageUnitName);
+                            // get device power status
+                            signageUnitRef
+                                .document(signageUnitName)
+                                .get()
+                                .then((value) {
+                              userTargettingState = value["isUserTargeting"];
+
+                              if (userTargettingState == true) {
+                                setState(() {
+                                  selectState = UserTargetState.turnOn;
+                                });
+                              } else {
+                                setState(() {
+                                  selectState = UserTargetState.turnOff;
+                                });
+                              }
+                            });
+                          },
+                          value: selectedDoc?.documentID,
+                          isExpanded: false,
+                          hint: new Text(
+                            "Choose Signage Device",
+                            style: TextStyle(color: Colors.blue),
                           ),
-                          Row(
-                            //crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.start,
+                        ),
+                      ],
+                    );
+                  }
+                },
+              ),
+              editDevices(),
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
+                child: Text(
+                  'Select Gender category',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 700.0,
+                child: Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: ListView.builder(
+                          padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          itemCount: genders.length,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              //splashColor: Colors.blue,
+                              onTap: () {
+                                setState(() {
+                                  genders.forEach(
+                                      (gender) => gender.isSelected = false);
+                                  //if (index == 2) {
+                                  ages.forEach((age) => age.isSelected = false);
+                                  CustomRadio1(ages[index]);
+                                  if (index != 2) {
+                                    ageActiveIndex = 5;
+                                  } else {
+                                    ageActiveIndex = 0;
+                                  }
+                                  //}
+                                  genders[index].isSelected = true;
+                                  genderActiveIndex = index;
+                                  //print("Current Index = $index ");
+                                });
+                              },
+                              child: CustomRadio(genders[index]),
+                            );
+                          },
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
+                        child: Text(
+                          'Select Age category',
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                          padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          itemCount: ages.length,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () {
+                                setState(() {
+                                  ages.forEach((age) => age.isSelected = false);
+                                  if (genderActiveIndex != 2) {
+                                    ages[index].isSelected = true;
+                                    ageActiveIndex = index;
+                                  } else {
+                                    ageActiveIndex = 0;
+                                  }
+                                });
+                              },
+                              child: CustomRadio1(ages[index]),
+                            );
+                          },
+                        ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
+                          child: Column(
                             children: [
                               Container(
-                                padding: const EdgeInsets.all(10.0),
                                 alignment: Alignment.centerLeft,
-                                child: RaisedButton(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10.0))),
-                                  onPressed: () {
-                                    if (ageActiveIndex != 5) {
-                                      _launchURL(
-                                          genderActiveIndex, ageActiveIndex);
-                                    } else {
-                                      showDialog(
-                                        context: context,
-                                        builder: (ctx) => AlertDialog(
-                                          title: Text("Alert!"),
-                                          content: Text("Select age category"),
-                                          actions: <Widget>[
-                                            FlatButton(
-                                              onPressed: () {
-                                                Navigator.of(ctx).pop();
-                                              },
-                                              child: Text("Try again"),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    }
-                                  },
-                                  color: Colors.blueAccent,
-                                  textColor: Colors.white,
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        padding:
-                                            EdgeInsets.fromLTRB(5, 5, 5, 5),
-                                        child: Text(
-                                          "Add assets",
-                                          style: TextStyle(fontSize: 20.0),
-                                        ),
-                                      ),
-                                      Container(
-                                        padding:
-                                            EdgeInsets.fromLTRB(5, 5, 0, 5),
-                                        child: Icon(
-                                          Icons.add,
-                                          size: 30.0,
-                                        ),
-                                      ),
-                                    ],
+                                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                child: Text(
+                                  'Add new assets',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ),
-                              Container(
-                                padding:
-                                    const EdgeInsets.fromLTRB(20, 10, 10, 5),
-                                alignment: Alignment.center,
-                                child: RaisedButton(
-                                  onPressed: () {
-                                    if (ageActiveIndex != 5) {
-                                      _handleURLButtonPress(context,
-                                          genderActiveIndex, ageActiveIndex);
-                                    } else {
-                                      showDialog(
-                                        context: context,
-                                        builder: (ctx) => AlertDialog(
-                                          title: Text("Alert!"),
-                                          content: Text("Select age category"),
-                                          actions: <Widget>[
-                                            FlatButton(
-                                              onPressed: () {
-                                                Navigator.of(ctx).pop();
-                                              },
-                                              child: Text("Try again"),
+                              Row(
+                                //crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(10.0),
+                                    alignment: Alignment.centerLeft,
+                                    child: RaisedButton(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0))),
+                                      onPressed: () {
+                                        if (ageActiveIndex != 5) {
+                                          _launchURL(genderActiveIndex,
+                                              ageActiveIndex);
+                                        } else {
+                                          showDialog(
+                                            context: context,
+                                            builder: (ctx) => AlertDialog(
+                                              title: Text("Alert!"),
+                                              content:
+                                                  Text("Select age category"),
+                                              actions: <Widget>[
+                                                FlatButton(
+                                                  onPressed: () {
+                                                    Navigator.of(ctx).pop();
+                                                  },
+                                                  child: Text("Got it!"),
+                                                ),
+                                              ],
                                             ),
-                                          ],
-                                        ),
-                                      );
-                                    }
-                                  },
-                                  color: Colors.blueGrey,
-                                  textColor: Colors.white,
-                                  child: Text(
-                                    'Watch preview',
-                                    style: TextStyle(fontSize: 15),
+                                          );
+                                        }
+                                      },
+                                      color: Colors.blueAccent,
+                                      textColor: Colors.white,
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            padding:
+                                                EdgeInsets.fromLTRB(5, 5, 5, 5),
+                                            child: Text(
+                                              "Add assets",
+                                              style: TextStyle(fontSize: 20.0),
+                                            ),
+                                          ),
+                                          Container(
+                                            padding:
+                                                EdgeInsets.fromLTRB(5, 5, 0, 5),
+                                            child: Icon(
+                                              Icons.add,
+                                              size: 30.0,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
+                                  Container(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        20, 10, 10, 5),
+                                    alignment: Alignment.center,
+                                    child: RaisedButton(
+                                      onPressed: () {
+                                        if (ageActiveIndex != 5) {
+                                          _handleURLButtonPress(
+                                              context,
+                                              genderActiveIndex,
+                                              ageActiveIndex);
+                                        } else {
+                                          showDialog(
+                                            context: context,
+                                            builder: (ctx) => AlertDialog(
+                                              title: Text("Alert!"),
+                                              content:
+                                                  Text("Select age category"),
+                                              actions: <Widget>[
+                                                FlatButton(
+                                                  onPressed: () {
+                                                    Navigator.of(ctx).pop();
+                                                  },
+                                                  child: Text("Got it!"),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        }
+                                      },
+                                      color: Colors.blueGrey,
+                                      textColor: Colors.white,
+                                      child: Text(
+                                        'Watch preview',
+                                        style: TextStyle(fontSize: 15),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              //add
+                              SizedBox(
+                                height: 10.0,
+                              ),
+                              ReusableCard(
+                                onPress: () {
+                                  if(selectedSignageUnit == null){
+                                    showToast(message:"Please select a device");
+                                  }
+                                  else if (userTargettingState == false) {
+                                    setState(() {
+                                      selectState = UserTargetState.turnOn;
+                                    });
+                                    signageUnitRef
+                                        .document(selectedSignageUnit)
+                                        .updateData({
+                                      "isUserTargeting": true,
+                                    });
+                                    userTargettingState = true;
+                                  } else {
+                                    setState(() {
+                                      selectState = UserTargetState.turnOff;
+                                    });
+                                    signageUnitRef
+                                        .document(selectedSignageUnit)
+                                        .updateData({
+                                      "isUserTargeting": false,
+                                    });
+                                    userTargettingState = false;
+                                  }
+                                },
+                                colour: selectState == UserTargetState.turnOn
+                                    ? kActiveCardColourON
+                                    : kInactiveCardColour,
+                                cardChild: IconContent(
+                                  icon: FontAwesomeIcons.powerOff,
+                                  label: selectState == UserTargetState.turnOn
+                                      ? 'User Targetting ON'
+                                      : 'User Targetting OFF',
                                 ),
                               ),
                             ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
-
             ],
           ),
         ],
@@ -586,6 +635,62 @@ class CustomRadio1 extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class ReusableCard extends StatelessWidget {
+  ReusableCard({@required this.colour, this.cardChild, this.onPress});
+
+  final Color colour;
+  final Widget cardChild;
+  final Function onPress;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onPress,
+      child: Container(
+        child: cardChild,
+        margin: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 5),
+        decoration: BoxDecoration(
+          color: colour,
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+      ),
+    );
+  }
+}
+
+class IconContent extends StatelessWidget {
+  IconContent({this.icon, this.label});
+
+  final IconData icon;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        SizedBox(
+          height: 15.0,
+        ),
+        Icon(
+          icon,
+          size: 80.0,
+        ),
+        SizedBox(
+          height: 15.0,
+        ),
+        Text(
+          label,
+          style: kLabelTextStyle,
+        ),
+        SizedBox(
+          height: 15.0,
+        ),
+      ],
     );
   }
 }
