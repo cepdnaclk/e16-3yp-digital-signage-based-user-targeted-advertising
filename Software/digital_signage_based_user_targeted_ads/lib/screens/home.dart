@@ -9,6 +9,7 @@ import 'package:project_api/screens/smartpower.dart';
 import 'package:project_api/screens/usertarget.dart';
 import 'package:project_api/screens/profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:project_api/widgets/header.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:project_api/models/user.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -205,9 +206,8 @@ class _HomeState extends State<Home> {
 
   Widget buildAuthScreen() {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Dashboard'),
-      ),
+      appBar: header(context,
+          titleText: "Dashboard", removeBackbtn: false),
       drawer: Drawer(
         child: ListView(
           children: [

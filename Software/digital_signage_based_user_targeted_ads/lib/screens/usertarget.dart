@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:project_api/widgets/header.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:project_api/adslides.dart';
 import 'package:project_api/services/web_view_container.dart';
@@ -56,9 +57,8 @@ class _UsertargetState extends State<Usertarget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Create assets"),
-      ),
+      appBar: header(context,
+          titleText: "Control Assets", removeBackbtn: false),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
