@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_api/widgets/header.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewContainer extends StatefulWidget {
@@ -15,7 +16,7 @@ class _WebViewContainerState extends State<WebViewContainer> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: header(context, titleText: "Preview", removeBackbtn: false),
       body: Column(
         children: [
           Expanded(
