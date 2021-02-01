@@ -23,6 +23,8 @@ final int timestamp = DateTime.now().millisecondsSinceEpoch;
 final userRef = Firestore.instance.collection('users');
 final powerSupplyRef = Firestore.instance.collection('power supply units');
 final signageUnitRef = Firestore.instance.collection('signage units');
+final issuedPwrSupplyRef = Firestore.instance.collection('issued power supply units');
+final issuedSignageRef = Firestore.instance.collection('issued signage units');
 
 final GoogleSignIn googleSignIn = GoogleSignIn();
 FirebaseAuth _auth;
