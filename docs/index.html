@@ -306,6 +306,91 @@
         </section>
 
 
+         <section class="page-section bg-dark text-white " id="smart_power_supply_unit">    
+            <div class="container">
+                <!--<div class="col-lg-10 justify-content-center">-->
+                <h2 class="text-left mt-0">&#8287;&#8287;&#8287;&#8287;&#8287;<center>Smart Power Supply Unit</center></h2>
+                <hr class="divider my-4" align="text-center" />
+                <div class="row">
+
+                    <div class="col-lg-6 ml-auto text-center mb-1 mb-lg-0">
+                        <br>
+                        <h3 class="text-center mt-0" style="15px">&#8287;&#8287;&#8287;&#8287;&#8287;Overall Design</h3>
+                        <img class="img-fluid" src="assets/img/portfolio/thumbnails/overalldesign_spu.png" alt="" style="width:800px;height:350px;"/>
+                    </div>
+                        
+                    <div class="col-lg-6 mr-auto text-center">
+                            <h2 class="text-center mt-0"></h2>
+                            <br>
+                            <br>
+                            <div class="col-lg-12 text-left text-muted mb-5">
+                                <ul style="line-height: 200%;">
+                                <li>MQTT protocol is used to design the smart power supply unit.</li>
+                                <li>Mobile app (MQTT client) publishes user given messages (ON or OFF) to a unique topic for that power supply unit.</li>
+                                <li>Mac address of the Node MCU is used as the topic to make the topic unique for that power supply unit.</li>
+                                <li>Node MCU(ESP8266) subscribes to the certain topic and recieves user given message through the broker.</li>
+                                <li>EMQX broker was used in our implementation.</li>
+                                <li>After recieving the user given message, it is given to 5V relay module by the NodeMCU. According to the message, screen is going to turn on or turn off.</li>
+                                </ul>    
+                            </div> 
+                    </div>
+
+                    <div class="col-lg-6 ml-auto text-center mb-1 mb-lg-0">
+                        <h3 class="text-center mt-0" style="15px">&#8287;&#8287;&#8287;&#8287;&#8287;Hardware Design</h3>
+                        <img class="img-fluid" src="assets/img/portfolio/thumbnails/hardwareimplementation_spu.jpg" alt="" style="width:800px;height:300px;"/>
+                        <br><br>
+                         <h4 style="color: orange">Components</h4>
+
+                        <div class="col-lg-12 text-left text-white-50 mb-5">
+                            <div class="container">
+                                 <div class="row">
+                                    <div class="col-lg-6 ml-auto text-left mb-1 mb-lg-0">
+                                        <ul style="line-height: 200%;">
+                                            <li>NodeMCU (ESP8266)</li>
+                                            <li>AC to DC converter</li>
+                                            <li>Relay (5v)</li>
+                                            <li>Plug</li>
+                                            <li>Power Socket</li>
+                                            <li>Switch</li>
+                                        </ul>  
+                                    </div>
+                                    <div class="col-lg-6 mr-auto text-left">
+                                        <ul style="line-height: 200%;">
+                                            <li>Indicators</li>
+                                            <li>Resistors</li>
+                                        </ul>  
+                                    </div>
+                                 </div>
+                            </div>
+
+                            
+                        </div>     
+                    </div>
+                        
+                    <div class="col-lg-6 mr-auto text-center">
+                            <br>
+                            <br>
+                            <div class="col-lg-12 text-left text-muted mb-5">
+                                <ul style="line-height: 200%;">
+                                    <h4 style="color: orange">Safety Factors</h4>
+                                    <li>5A fuse is included in the plug to protect the relay module from high currents.</li>
+                                    <li>Heat sink is added to protect the device if it becomes overheated.</li>
+                                    <li>Earthing is used here to protect the user from an electric shock.</li>
+                                    <br>
+                                    <h4 style="color: orange">Special Concerns</h4>
+                                    <li>If a wifi failure happens, you can disconnect the smart power supply unit by the switch and switch on or off manually.</li>
+                                    <li>If there is a power failure, you don’t have to worry. It will execute the last message given by the user.</li>
+                                    <li>Using WifiManager library, ESP8266 can be connected to Wifi router without hardcoding router SSID and password in the code.</li>
+                                </ul>    
+                            </div> 
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
 
         <!-- Services-->
         <section class="page-section bg-transparent" id="services">
