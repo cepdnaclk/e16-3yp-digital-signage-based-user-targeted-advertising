@@ -19,11 +19,11 @@ enum PowerState {
 }
 
 class _PowerSupplyState extends State<PowerSupply> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  // }
 
   final macKey = GlobalKey<FormState>();
 
@@ -32,15 +32,29 @@ class _PowerSupplyState extends State<PowerSupply> {
 
   String deviceMAC = "";
   bool pwrState;
-  bool isVeryfied;
 
   String selectedPwrSupply;
 
-  setupDevice() {
-    mqttClientWrapper.prepareMqttClient(deviceMAC);
+  setupDevice(deviceName) {
+    mqttClientWrapper.prepareMqttClient(deviceName);
   }
 
-  Future<bool> validateMAC() async {
+  Future<bool> addValidateMAC() async {
+    try {
+      DocumentSnapshot documentSnapshot =
+          await issuedPwrSupplyRef.document(deviceMAC).get();
+
+      if (documentSnapshot.exists) {
+        return Future.value(true);
+      } else {
+        return Future.value(false);
+      }
+    } on Exception catch (e) {
+      print(e);
+      return Future.value(false);
+    }
+  }
+  Future<bool> removeValidateMAC() async {
     try {
       DocumentSnapshot documentSnapshot =
           await powerSupplyRef.document(deviceMAC).get();
@@ -55,25 +69,23 @@ class _PowerSupplyState extends State<PowerSupply> {
       return Future.value(false);
     }
   }
-
   addDevice() async {
     final form = macKey.currentState;
     form.save();
     if (form.validate()) {
-      if (await validateMAC()) {
+      if (await addValidateMAC()) {
         setState(() {
-          setupDevice();
           showToast(message: "Device added successfully");
           powerSupplyRef.document(deviceMAC).setData({
-            "isVeryfied": true,
+            // "isVeryfied": true,
             "activeStatus": false,
-            "deviceMAC": deviceMAC,
-            "customerID": currentUserWithInfo?.id,
-            "timestamp": timestamp,
+            // "deviceMAC": deviceMAC,
+            // "customerID": currentUserWithInfo?.id,
+            // "timestamp": timestamp,
           });
         });
       } else {
-        showToast(message: "Please check the internet connectivity");
+        showToast(message: "Please check the Serial number againy");
       }
     } else {
       showToast(message: "Please check the Serial number again");
@@ -84,11 +96,11 @@ class _PowerSupplyState extends State<PowerSupply> {
     final form = macKey.currentState;
     form.save();
     if (form.validate()) {
-      if (await validateMAC()) {
+      if (await removeValidateMAC()) {
         setState(() {
           // setupDevice();
           showToast(message: "Device deleted successfully");
-          powerSupplyRef.document(deviceMAC).delete();
+          powerSupplyRef.document(selectedPwrSupply).delete();
         });
       } else {
         showToast(message: "Please check the Serial number again");
@@ -161,108 +173,125 @@ class _PowerSupplyState extends State<PowerSupply> {
     return Scaffold(
       appBar: header(context,
           titleText: "Smart Power Supply Unit", removeBackbtn: false),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      body: ListView(
         children: <Widget>[
-          SizedBox(
-            height: 50.0,
-          ),
-          StreamBuilder<QuerySnapshot>(
-              stream: powerSupplyRef.snapshots(),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData)
-                  const Text("Loading.....");
-                else {
-                  List<DropdownMenuItem> pwrSupplies = [];
-                  for (int i = 0; i < snapshot.data.documents.length; i++) {
-                    DocumentSnapshot snap = snapshot.data.documents[i];
-                    pwrSupplies.add(
-                      DropdownMenuItem(
-                        child: Text(
-                          snap.documentID,
-                          style: TextStyle(color: Colors.blue),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              SizedBox(
+                height: 50.0,
+              ),
+              StreamBuilder<QuerySnapshot>(
+                stream: powerSupplyRef.snapshots(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData)
+                    const Text("Loading.....");
+                  else {
+                    List<DropdownMenuItem> pwrSupplies = [];
+                    for (int i = 0; i < snapshot.data.documents.length; i++) {
+                      DocumentSnapshot snap = snapshot.data.documents[i];
+                      pwrSupplies.add(
+                        DropdownMenuItem(
+                          child: Text(
+                            snap.documentID,
+                            style: TextStyle(color: Colors.blue),
+                          ),
+                          value: "${snap.documentID}",
                         ),
-                        value: "${snap.documentID}",
-                      ),
+                      );
+                    }
+                    var selectedDoc = snapshot.data.documents.firstWhere(
+                      (doc) => doc.documentID == selectedPwrSupply,
+                      orElse: () => null,
+                    );
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(FontAwesomeIcons.plug,
+                            size: 25.0, color: Colors.blue),
+                        SizedBox(width: 50.0),
+                        DropdownButton(
+                          items: pwrSupplies,
+                          onChanged: (pwrSupplyName) {
+                            final snackBar = SnackBar(
+                              content: Text(
+                                'Selected Power Supply is $pwrSupplyName',
+                                style: TextStyle(color: Colors.blue),
+                              ),
+                            );
+                            Scaffold.of(context).showSnackBar(snackBar);
+                            setState(() {
+                              selectedPwrSupply = pwrSupplyName;
+                            });
+                            setupDevice(pwrSupplyName);
+                            //get device power status
+                            powerSupplyRef
+                                .document(pwrSupplyName)
+                                .get()
+                                .then((value) {
+                              pwrState = value["activeStatus"];
+
+                              if (pwrState == true) {
+                                setState(() {
+                                  selectState = PowerState.turnOn;
+                                });
+                              } else {
+                                setState(() {
+                                  selectState = PowerState.turnOff;
+                                });
+                              }
+                            });
+                          },
+                          value: selectedDoc?.documentID,
+                          isExpanded: false,
+                          hint: new Text(
+                            "Choose Power Supply",
+                            style: TextStyle(color: Colors.blue),
+                          ),
+                        ),
+                      ],
                     );
                   }
-                  var selectedDoc = snapshot.data.documents.firstWhere(
-                    (doc) => doc.documentID == selectedPwrSupply,
-                    orElse: () => null,
-                  );
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Icon(FontAwesomeIcons.plug,
-                          size: 25.0, color: Colors.blue),
-                      SizedBox(width: 50.0),
-                      DropdownButton(
-                        items: pwrSupplies,
-                        onChanged: (pwrSupplyName) {
-                          final snackBar = SnackBar(
-                            content: Text(
-                              'Selected Power Supply is $pwrSupplyName',
-                              style: TextStyle(color: Colors.blue),
-                            ),
-                          );
-                          Scaffold.of(context).showSnackBar(snackBar);
-                          setState(() {
-                            selectedPwrSupply = pwrSupplyName;
-                          });
-                          //get device power status
-                          // powerSupplyRef.document(deviceMAC)
-                          //   ..get().then((value) {
-                          //     pwrState = value["isVeryfied"];
-                          //     if (pwrState == true) {
-                          //       setState(() {
-                          //         selectState = PowerState.turnOn;
-                          //       });
-                          //     } else {
-                          //       setState(() {
-                          //         selectState = PowerState.turnOff;
-                          //       });
-                          //     }
-                          //   });
-                        },
-                        value: selectedDoc?.documentID,
-                        isExpanded: false,
-                        hint: new Text(
-                          "Choose Power Supply",
-                          style: TextStyle(color: Colors.blue),
-                        ),
-                      ),
-                    ],
-                  );
-                }
-              }),
-          SizedBox(
-            height: 40.0,
+                },
+              ),
+              SizedBox(
+                height: 40.0,
+              ),
+              ReusableCard(
+                onPress: () {
+                  if (pwrState == false) {
+                    setState(() {
+                      selectState = PowerState.turnOn;
+                    });
+                    mqttClientWrapper.publishMessage("1");
+                    powerSupplyRef.document(selectedPwrSupply).setData({
+                      "activeStatus": true,
+                    });
+                    pwrState = true;
+                  } else {
+                    setState(() {
+                      selectState = PowerState.turnOff;
+                    });
+                    mqttClientWrapper.publishMessage("0");
+                    powerSupplyRef.document(selectedPwrSupply).updateData({
+                      "activeStatus": false,
+                    });
+                    pwrState = false;
+                  }
+                },
+                colour: selectState == PowerState.turnOn
+                    ? kActiveCardColourON
+                    : kInactiveCardColour,
+                cardChild: IconContent(
+                  icon: FontAwesomeIcons.powerOff,
+                  label: selectState == PowerState.turnOn
+                      ? 'Screen ON'
+                      : 'Screen OFF',
+                ),
+              ),
+              editDevices(),
+            ],
           ),
-          ReusableCard(
-            onPress: () {
-              // pwrState = true;
-              if (pwrState == false) {
-                setState(() {
-                  selectState = PowerState.turnOn;
-                });
-                pwrState = true;
-              } else {
-                setState(() {
-                  selectState = PowerState.turnOff;
-                });
-                pwrState = false;
-              }
-            },
-            colour: selectState == PowerState.turnOn
-                ? kActiveCardColourON
-                : kInactiveCardColour,
-            cardChild: IconContent(
-              icon: FontAwesomeIcons.powerOff,
-              label:
-                  selectState == PowerState.turnOn ? 'Screen ON' : 'Screen OFF',
-            ),
-          ),
-          editDevices(),
         ],
       ),
     );

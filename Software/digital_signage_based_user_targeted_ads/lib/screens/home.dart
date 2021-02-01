@@ -9,6 +9,7 @@ import 'package:project_api/screens/smartpower.dart';
 import 'package:project_api/screens/usertarget.dart';
 import 'package:project_api/screens/profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:project_api/widgets/header.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:project_api/models/user.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -22,6 +23,8 @@ final int timestamp = DateTime.now().millisecondsSinceEpoch;
 final userRef = Firestore.instance.collection('users');
 final powerSupplyRef = Firestore.instance.collection('power supply units');
 final signageUnitRef = Firestore.instance.collection('signage units');
+final issuedPwrSupplyRef = Firestore.instance.collection('issued power supply units');
+final issuedSignageRef = Firestore.instance.collection('issued signage units');
 
 final GoogleSignIn googleSignIn = GoogleSignIn();
 FirebaseAuth _auth;
@@ -205,9 +208,8 @@ class _HomeState extends State<Home> {
 
   Widget buildAuthScreen() {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Dashboard'),
-      ),
+      appBar: header(context,
+          titleText: "Dashboard", removeBackbtn: false),
       drawer: Drawer(
         child: ListView(
           children: [
