@@ -77,11 +77,11 @@ class _PowerSupplyState extends State<PowerSupply> {
         setState(() {
           showToast(message: "Device added successfully");
           powerSupplyRef.document(deviceMAC).setData({
-            // "isVeryfied": true,
+            "isVeryfied": true,
             "activeStatus": false,
             // "deviceMAC": deviceMAC,
-            // "customerID": currentUserWithInfo?.id,
-            // "timestamp": timestamp,
+            "customerID": currentUserWithInfo?.id,
+            "timestamp": timestamp,
           });
         });
       } else {
@@ -122,8 +122,8 @@ class _PowerSupplyState extends State<PowerSupply> {
             padding: EdgeInsets.fromLTRB(16.0, 40.0, 16.0, 0.0),
             child: TextFormField(
               validator: (val) {
-                if ((0 <= val.trim().length && 4 > val.trim().length) ||
-                    val.trim().length > 4) {
+                if ((0 <= val.trim().length && 17 > val.trim().length) ||
+                    val.trim().length > 17) {
                   return "Enter a valid Serial";
                 } else {
                   return null;

@@ -98,7 +98,7 @@ class _EditProfileState extends State<EditProfile> {
           controller: dispAgeController,
           decoration: InputDecoration(
             hintText: "Update Your Age",
-            errorText: _dispNameValid ? null : "Enter a valid age",
+            errorText: _ageValid ? null : "Enter a valid age",
           ),
         )
       ],
@@ -216,6 +216,11 @@ class _EditProfileState extends State<EditProfile> {
               dispNameController.text.isEmpty
           ? _dispNameValid = false
           : _dispNameValid = true;
+
+      dispAgeController.text.trim().length > 2 ||
+              dispAgeController.text.isEmpty
+          ? _ageValid = false
+          : _ageValid = true;
 
       homeNumberController.text.trim().length < 3 ||
               homeNumberController.text.isEmpty
