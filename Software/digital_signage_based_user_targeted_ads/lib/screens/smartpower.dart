@@ -165,7 +165,7 @@ class _PowerPageState extends State<PowerPage> {
                   : kInactiveCardColour,
               cardChild: IconContent(
                 icon: FontAwesomeIcons.powerOff,
-                label: 'Screen ON',
+                label: 'Screen currently ON',
               ),
             ),
           ),
@@ -184,7 +184,7 @@ class _PowerPageState extends State<PowerPage> {
                   : kInactiveCardColour,
               cardChild: IconContent(
                 icon: FontAwesomeIcons.powerOff,
-                label: 'Screen OFF',
+                label: 'Screen currently OFF',
               ),
             ),
           ),

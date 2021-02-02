@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:project_api/widgets/header.dart';
 
+import 'package:project_api/validators.dart';
 import 'home.dart';
 
 class CreateAccount extends StatefulWidget {
@@ -14,7 +15,7 @@ class CreateAccount extends StatefulWidget {
   _CreateAccountState createState() => _CreateAccountState();
 }
 
-class _CreateAccountState extends State<CreateAccount> {
+class _CreateAccountState extends State<CreateAccount> with ValidateEntries {
   Placemark placemark;
   final _formKey = GlobalKey<FormState>();
 
@@ -87,13 +88,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 Padding(
                   padding: EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
                   child: TextFormField(
-                    validator: (val) {
-                      if (val.trim().length < 3 || val.trim().length == 0) {
-                        return "Enter valid Name";
-                      } else {
-                        return null;
-                      }
-                    },
+                    validator: validateUsername,
                     onSaved: (val) => name = val,
                     initialValue: widget.dispUser.displayName,
                     decoration: InputDecoration(
@@ -107,13 +102,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 Padding(
                   padding: EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
                   child: TextFormField(
-                    validator: (val) {
-                      if (val.trim().length > 2 || val.trim().length == 0) {
-                        return "Enter Valid age";
-                      } else {
-                        return null;
-                      }
-                    },
+                    validator: validateUserAge,
                     onSaved: (val) => age = val,
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
@@ -127,14 +116,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 Padding(
                   padding: EdgeInsets.all(16.0),
                   child: TextFormField(
-                    validator: (val) {
-                      if ((0 < val.trim().length && 10 > val.trim().length) ||
-                          val.trim().length > 10) {
-                        return "Enter valid Number";
-                      } else {
-                        return null;
-                      }
-                    },
+                    validator: validateUserContact,
                     onSaved: (val) => contactNum = val,
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(

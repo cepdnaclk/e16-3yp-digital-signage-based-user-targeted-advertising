@@ -218,7 +218,8 @@ class _EditProfileState extends State<EditProfile> {
           : _dispNameValid = true;
 
       dispAgeController.text.trim().length > 2 ||
-              dispAgeController.text.isEmpty
+              dispAgeController.text.isEmpty ||
+              int.parse(dispAgeController.text.trim()) < 18
           ? _ageValid = false
           : _ageValid = true;
 
@@ -240,7 +241,9 @@ class _EditProfileState extends State<EditProfile> {
           ? _cityValid = false
           : _cityValid = true;
 
-      contactNumController.text.trim().length != 10
+      contactNumController.text.trim().length != 10 ||
+              contactNumController.text.contains(RegExp(r'[^0-9]')) ||
+              !contactNumController.text.startsWith('07')
           ? _contactNumValid = false
           : _contactNumValid = true;
     });
