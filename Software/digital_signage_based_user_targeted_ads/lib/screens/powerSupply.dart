@@ -7,6 +7,7 @@ import 'package:project_api/widgets/header.dart';
 import 'package:project_api/widgets/rounded_btn.dart';
 import '../constants.dart';
 import 'package:project_api/mqttClient/mqttclient.dart';
+import 'package:project_api/validators.dart';
 
 class PowerSupply extends StatefulWidget {
   @override
@@ -18,7 +19,7 @@ enum PowerState {
   turnOff,
 }
 
-class _PowerSupplyState extends State<PowerSupply> {
+class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
   // @override
   // void initState() {
   //   // TODO: implement initState
@@ -54,6 +55,7 @@ class _PowerSupplyState extends State<PowerSupply> {
       return Future.value(false);
     }
   }
+
   Future<bool> removeValidateMAC() async {
     try {
       DocumentSnapshot documentSnapshot =
@@ -69,6 +71,7 @@ class _PowerSupplyState extends State<PowerSupply> {
       return Future.value(false);
     }
   }
+
   addDevice() async {
     final form = macKey.currentState;
     form.save();
@@ -77,15 +80,15 @@ class _PowerSupplyState extends State<PowerSupply> {
         setState(() {
           showToast(message: "Device added successfully");
           powerSupplyRef.document(deviceMAC).setData({
-            "isVeryfied": true,
+            // "isVeryfied": true,
             "activeStatus": false,
             // "deviceMAC": deviceMAC,
-            "customerID": currentUserWithInfo?.id,
-            "timestamp": timestamp,
+            // "customerID": currentUserWithInfo?.id,
+            // "timestamp": timestamp,
           });
         });
       } else {
-        showToast(message: "Please check the Serial number againy");
+        showToast(message: "Please check the Serial number again");
       }
     } else {
       showToast(message: "Please check the Serial number again");
@@ -121,14 +124,7 @@ class _PowerSupplyState extends State<PowerSupply> {
           child: Padding(
             padding: EdgeInsets.fromLTRB(16.0, 40.0, 16.0, 0.0),
             child: TextFormField(
-              validator: (val) {
-                if ((0 <= val.trim().length && 17 > val.trim().length) ||
-                    val.trim().length > 17) {
-                  return "Enter a valid Serial";
-                } else {
-                  return null;
-                }
-              },
+              validator: validateDeviceSerialNo,
               onSaved: (val) => deviceMAC = val,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
@@ -285,8 +281,8 @@ class _PowerSupplyState extends State<PowerSupply> {
                 cardChild: IconContent(
                   icon: FontAwesomeIcons.powerOff,
                   label: selectState == PowerState.turnOn
-                      ? 'Screen ON'
-                      : 'Screen OFF',
+                      ? 'Screen currently ON'
+                      : 'Screen currently OFF',
                 ),
               ),
               editDevices(),
