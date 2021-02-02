@@ -12,6 +12,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final formKey = new GlobalKey<FormState>();
+  TextEditingController numberController = TextEditingController();
+  bool _numValid = true;
 
   String phoneNo, verificationId, smsCode;
 
@@ -50,13 +52,18 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               SizedBox(
-                height: 40,
+                height: 30.0,
               ),
               Padding(
                   padding: EdgeInsets.only(left: 25.0, right: 25.0),
                   child: TextFormField(
+                    controller: numberController,
                     keyboardType: TextInputType.phone,
-                    decoration: InputDecoration(hintText: 'Enter phone number'),
+                    decoration: InputDecoration(
+                      hintText: 'Enter a phone number (+94)',
+                      errorText:
+                          _numValid ? null : "Enter a valid phone number",
+                    ),
                     onChanged: (val) {
                       setState(() {
                         this.phoneNo = val;
@@ -83,7 +90,12 @@ class _LoginPageState extends State<LoginPage> {
                       Center(child: codeSent ? Text('Login') : Text('Verify')),
                   onPressed: () {
                     setState(() {
-                      showProgressloading = true;
+                      if (numberController.text.trim().length != 12) {
+                        _numValid = false;
+                      } else {
+                        showProgressloading = true;
+                        _numValid = true;
+                      }
                     });
 
                     if (codeSent == true) {

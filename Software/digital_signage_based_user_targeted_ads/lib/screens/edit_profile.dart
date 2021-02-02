@@ -98,7 +98,7 @@ class _EditProfileState extends State<EditProfile> {
           controller: dispAgeController,
           decoration: InputDecoration(
             hintText: "Update Your Age",
-            errorText: _dispNameValid ? null : "Enter a valid age",
+            errorText: _ageValid ? null : "Enter a valid age",
           ),
         )
       ],
@@ -217,6 +217,12 @@ class _EditProfileState extends State<EditProfile> {
           ? _dispNameValid = false
           : _dispNameValid = true;
 
+      dispAgeController.text.trim().length > 2 ||
+              dispAgeController.text.isEmpty ||
+              int.parse(dispAgeController.text.trim()) < 18
+          ? _ageValid = false
+          : _ageValid = true;
+
       homeNumberController.text.trim().length < 3 ||
               homeNumberController.text.isEmpty
           ? _hNumValid = false
@@ -235,7 +241,9 @@ class _EditProfileState extends State<EditProfile> {
           ? _cityValid = false
           : _cityValid = true;
 
-      contactNumController.text.trim().length != 10
+      contactNumController.text.trim().length != 10 ||
+              contactNumController.text.contains(RegExp(r'[^0-9]')) ||
+              !contactNumController.text.startsWith('07')
           ? _contactNumValid = false
           : _contactNumValid = true;
     });
