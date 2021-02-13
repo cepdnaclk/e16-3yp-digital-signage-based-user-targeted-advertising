@@ -178,17 +178,18 @@
                          <div class="col-lg-12 text-left text-white-50 mb-5">
                             <ul style="line-height: 200%; align-content: left; padding-left:0">    
                                 <li>Main Entities Of The Database are ADMINISTRATION, CUSTOMER(Shop owner who is willing to buy signage unit), ADVERTISEMENT and WORK_TIME. Main relationships are REGISTERS, UPLOADS and SCHEDULES.</li>
+                                <br>
                                  <li>ADVERTISEMENT entity has a unique id as the primary key. Advertisements can be in three types.   <br>-Image,   Ticker(Text),   Video</li>
                             </ul>
                         </div>       
                     </div>
                     <div class="col-lg-6 mr-auto text-center">
                         <div class="col-lg-12 text-left text-white-50 mb-5">
-                            <ul style="line-height: 200%;">
-                               <br><br><br>
+                            <ul style="line-height: 200%; align-content: left; padding-left:1">
                                 <li>CUSTOMER table has a composite key, Customer_id along with Device_id. Having a composite key here is useful when same customer is buying more than one signage unit. Here,Device_id refers to the MAC address of the NIC of digital signage controlling unit.</li>
+                                <br>
                                 <li>1:n relationship exists between ADMINISTRATION and CUMSTOMER, beacause a customer only has one ADMINISTRATION and ADMINISTRATION has many customers. And we can see total participation in both sides because everyone should be registered to use the system.</li>
-                                 
+                                <br>
                                 <li>As digital screen can be turned on and off only within the working hours because of our smart power supply unit, customer can schedule the time slots for each day. That data is stored in WORKING_TIME entity. It is a weak entity that does not have a primary key. Here, we have got a weak key 'Day' and same key can be repeated.</li>
                             </ul>    
                         </div> 
@@ -252,12 +253,12 @@
                     <div class="col-lg-6 ml-auto text-center mb-1 mb-lg-0">
                         <h2 class="text-center mt-0">Flow Chart</h2>
                         <hr class="divider my-4" />
-                        <img class="img-fluid" src="assets/img/portfolio/thumbnails/flowchart.png" alt="" style="width:700px;height:300px;"/>
+                        <img class="img-fluid mt-4" src="assets/img/portfolio/thumbnails/flowchart.png" alt="" style="width:700px;height:300px;"/>
                     </div>
                 <div class="col-lg-6 mr-auto text-center">
                         <h2 class="text-center mt-0">Data Flow</h2>
                         <hr class="divider my-4" />
-                        <div class="col-lg-12 text-left text-muted mb-5">
+                        <div class="col-lg-12 text-left text-white-50 mb-5">
                             <ul style="line-height: 200%;">
                                 <li>User is supposed to upload the advertisements using the mobile app or web app.</li>
                                 <li>Those advertisements are uploaded into SD card in RPI board through the Web server.</li>
@@ -280,10 +281,11 @@
                 <!--<div class="col-lg-10 justify-content-center">-->
                 <div class="row">
                     <div class="col-lg-6 ml-auto text-center mb-1 mb-lg-0">
-                        <h2 class="text-left mt-0">&#8287;&#8287;&#8287;&#8287;&#8287;User Targeted Advertising</h2>
+                    	 <h2 class="text-center mt-0">User Targeted Advertising</h2>
+                        <!--<h2 class="text-left mt-0">&#8287;&#8287;&#8287;&#8287;&#8287;User Targeted Advertising</h2>-->
                         <hr class="divider my-4" align="text-center" />
 
-                        <img class="img-fluid" src="assets/img/portfolio/thumbnails/allone.png" alt="" style="width:800px;height:500px;"/>
+                        <img class="img-fluid mt-4" src="assets/img/portfolio/thumbnails/allone.png" alt="" style="width:700px;height:500px;"/>
                     </div>
                         
                 <div class="col-lg-6 mr-auto text-center">
@@ -309,8 +311,9 @@
                 <!--<div class="col-lg-10 justify-content-center">-->
                 <div class="row">
                     <div class="col-lg-6 ml-auto text-center mb-1 mb-lg-0">
-                        <h3 class="text-center mt-0" style="color:blue">&#8287;&#8287;&#8287;&#8287;&#8287;Test To Check Accuracy When Multiple Faces Appears</h3>
-                        <img class="img-fluid" src="assets/img/portfolio/thumbnails/test results.png" alt="" style="width:800px;height:500px;"/>
+                        <h3 class="text-center mt-0">Test To Check Accuracy When Multiple Faces Appears</h3>
+                        <hr class="divider my-4" align="text-center" />
+                        <img class="img-fluid mt-4" src="assets/img/portfolio/thumbnails/test results.png" alt="" style="width:800px;height:500px;"/>
                     </div>
                         
                 <div class="col-lg-6 mr-auto text-center">
@@ -330,30 +333,56 @@
                                 <li>Unit Test Library In Python</li>
                                 
                                 <h4 style="color: purple">Results</h4>
-                                 <img class="img-fluid" src="assets/img/portfolio/thumbnails/test_results_table.PNG" alt="" style="width:200px;height:200px;"/>
-
-                                
+                                 <img class="img-fluid" src="assets/img/portfolio/thumbnails/test_results_table.PNG" alt="" style="width:600px;height:300px;"/> 
                             </ul>    
                         </div> 
 
                     </div>
                 </div>
             </div>
-
         </section>
-
-
-         <section class="page-section bg-dark text-white " id="smart_power_supply_unit">    
+        
+        <section class="page-section bg-dark text-white" id="progress">    
             <div class="container">
                 <!--<div class="col-lg-10 justify-content-center">-->
-                <h2 class="text-left mt-0">&#8287;&#8287;&#8287;&#8287;&#8287;<center>Smart Power Supply Unit</center></h2>
+                <div class="row">
+                    <div class="col-lg-6 ml-auto text-center mb-1 mb-lg-0">
+                        <h2 class="text-center mt-0">Unit testing for app and backend</h2>
+                        <hr class="divider my-4" />
+                        <img class="img-fluid mt-4" src="assets/img/portfolio/thumbnails/create_account_test.png" alt="" style="width:700px;height:300px;"/>
+                        <img class="img-fluid mt-4" src="assets/img/portfolio/thumbnails/mock_firestore_test.png" alt="" style="width:700px;height:300px;"/>
+                    </div>
+                <div class="col-lg-6 mr-auto text-center">
+                        <h2 class="text-center mt-0">Results and Findings</h2>
+                        <hr class="divider my-4" />
+                        <div class="col-lg-12 text-left text-muted-50 mb-5">
+                            <ul style="line-height: 200%;">
+                                <li>cloud firestore mocks and flutter test dependencies are used for several testing in both app and the backend firebase</li><br>
+                                <li>User entry validations performed to provide a better user experience. Invalid user inputs captured and informed properly. Added mac addresses by users are realtime synced to the menus and testing done for device adding and deleting procedures in app. </li><br>
+                                <li>Firestore is used as the backend databse and collections are used to organize data structure of users and devices.</li><br>
+                                <li>Mac addresses are used for document topics in firestore to identify each device. Testing perfomed with this structure for correct retrieval and deletion of devices through app by the user.</li><br>
+                                <li>Results from tests optimized the structure of the firestore for categorizing users and also providing analytics by realtime counts of people captured for user targeting in each gender category.</li>
+                            </ul>    
+                        </div> 
+
+                    </div>
+                </div>
+            </div>
+        </section>  
+
+
+         <section class="page-section bg-white text-black " id="smart_power_supply_unit">    
+            <div class="container">
+                <!--<div class="col-lg-10 justify-content-center">-->
+                <h2 class="text-left mt-0"><center>Smart Power Supply Unit</center></h2>
                 <hr class="divider my-4" align="text-center" />
                 <div class="row">
 
                     <div class="col-lg-6 ml-auto text-center mb-1 mb-lg-0">
                         <br>
-                        <h3 class="text-center mt-0" style="15px">&#8287;&#8287;&#8287;&#8287;&#8287;Overall Design</h3>
-                        <img class="img-fluid" src="assets/img/portfolio/thumbnails/overalldesign_spu.png" alt="" style="width:800px;height:350px;"/>
+                        <h3 class="text-center mt-0" style="15px">Overall Design</h3>
+                        <hr class="divider my-4" />
+                        <img class="img-fluid " src="assets/img/portfolio/thumbnails/overalldesign_spu.png" alt="" style="width:800px;height:350px;"/>
                     </div>
                         
                     <div class="col-lg-6 mr-auto text-center">
@@ -373,7 +402,8 @@
                     </div>
 
                     <div class="col-lg-6 ml-auto text-center mb-1 mb-lg-0">
-                        <h3 class="text-center mt-0" style="15px">&#8287;&#8287;&#8287;&#8287;&#8287;Hardware Design</h3>
+                        <h3 class="text-center mt-0" style="15px">Hardware Design</h3>
+                        <hr class="divider my-4" />
                         <img class="img-fluid" src="assets/img/portfolio/thumbnails/hardwareimplementation_spu.jpg" alt="" style="width:800px;height:300px;"/>
                         <br><br>
                          <h4 style="color: orange">Components</h4>
@@ -452,7 +482,7 @@
                     <div class="col-lg-3 col-md-6 text-center">
                         <div class="mt-5">
                             <i class="fas fa-4x fa-window-restore text-primary mb-4"></i>
-                            <h3 class="h4 mb-2">Upload advertisements through web app</h3>
+                            <h3 class="h4 mb-2">Upload advertisements through mobile app</h3>
                             <p class="text-muted mb-0">display promotions,sales,new arrivals</p>
                         </div>
                     </div>
