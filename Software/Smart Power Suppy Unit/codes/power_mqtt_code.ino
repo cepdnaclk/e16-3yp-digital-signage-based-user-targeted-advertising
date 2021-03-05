@@ -13,12 +13,13 @@ WiFiManager wifiManager;
 WiFiClient espClient;
 PubSubClient client(espClient);
 
-//long lastMsg = 0;    // no use, remove
-//char msg[50];        // no use, remove
-//int value = 0;       // no use, remove
+//not used
+//long lastMsg = 0;    
+//char msg[50];        
+//int value = 0;       
 
 String mac_add = "";
-char mac_address[50] = "test1/";
+//char mac_address[50] = "test1/";				//included when nesting the topic 
 
 /* ============================---connect to WiFi----=============================== */
 void setup_wifi() {
@@ -28,17 +29,17 @@ void setup_wifi() {
   Serial.println();
   Serial.print("Connecting to ");
 
-  wifiManager.autoConnect("Power Supply", "12345678");    // make the local network, if previous network is not available
+  wifiManager.autoConnect("Power Supply", "12345678");    // make the local network, if previous network is not available(flash memory keeps record of last known network)
 
   randomSeed(micros());                                   // make a random seed
   
  
   /* ======== convert string ---> char array ===========*/
-  // 
+  
   mac_add = WiFi.macAddress();
   int i = 0;
   for (i = 0; i < 50; i++) {
-    mac_address[i] = mac_add[i];
+    mac_address[i] = mac_add[i];			    //Take the mac address of the device(esp8266) 
   }
   /* ===================================================*/
 
@@ -52,7 +53,7 @@ void setup_wifi() {
 }
 /*====================================================================================*/
 
-/*==================================--- call back--- =================================*/
+/*==================================--- callback ---=================================*/
 void callback(char* topic, byte* payload, unsigned int length) {
 
   Serial.print("Message arrived [");
@@ -69,10 +70,10 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
   switch (in)
   {
-    case 1:                               // make bultin led ON
+    case 1:                               // make built-in led ON (send HIGH signal to the relay to turn socket ON)
       digitalWrite(13, HIGH);
       break;
-    case 0:                               // make bultin led ON
+    case 0:                               // make built-in led OFF(send LOW signal to the relay to turn socket OFF)
       digitalWrite(13, LOW);
       break;
   }
@@ -115,7 +116,7 @@ void reconnect() {
     }
   }
 
-  digitalWrite(4, LOW);                            // turn on the green LRD when WiFi is avalible
+  digitalWrite(4, LOW);                            // turn on the green LED when WiFi is avalible
 }
 
 /*======================================================================================*/
@@ -124,7 +125,7 @@ void reconnect() {
 void setup() {
   pinMode(13, OUTPUT);                            // Configure Pin 13 (D7) as as Output
   pinMode(4, OUTPUT);                             // Configure Pin 13 (D2) as as Output
-  digitalWrite(13, LOW);                          // turn off the socket at the begening
+  digitalWrite(13, LOW);                          // turn off the socket at the beginning
   int count = 0;
 
   Serial.begin(115200);
