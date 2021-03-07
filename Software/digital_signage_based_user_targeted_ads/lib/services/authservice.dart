@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project_api/screens/home.dart';
 import 'package:project_api/screens/loginpage.dart';
+import 'package:project_api/screens/unAuth.dart';
 
 class AuthService {
   //Handles Auth
@@ -10,7 +11,7 @@ class AuthService {
         stream: FirebaseAuth.instance.onAuthStateChanged,
         builder: (BuildContext context, snapshot) {
           if (snapshot.hasData) {
-            return Home();
+            return UnAuth();
           } else {
             return LoginPage();
           }
