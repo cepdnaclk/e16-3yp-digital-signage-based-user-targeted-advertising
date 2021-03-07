@@ -42,7 +42,7 @@ Our solution architecture mainly consists of three units. They are digital signa
 
 The system consists of raspberry pi 3 which will act as the heart of the system and flutter as the mobile application framework for the front end and firestore as the backend.
 
-<img src="https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising/blob/main/docs/assets/img/portfolio/thumbnails/flowchart.png" alt="image_architecture" width="600" height="460" /> 
+<img src="https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising/blob/main/docs/assets/img/portfolio/thumbnails/flowchart_new.png" alt="image_architecture" width="600" height="460" /> 
 
 In the processes of user targeting, the User Detecting and Analyzing Unit recognizes the person in front of it  as a male or female.  Then approximate the age of that person. If there are more than one people, the system recognizes all the people. Here to take the live camera feed to the system, Raspberry PI camera module is used and to predict the age and the gender pre-trained machine learning and deep learning models with OpenCV are used.  
  
