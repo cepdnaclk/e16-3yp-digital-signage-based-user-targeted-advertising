@@ -20,22 +20,22 @@ enum PowerState {
 }
 
 class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  // }
 
-  final macKey = GlobalKey<FormState>();
+  final powerFormKey = GlobalKey<FormState>();
 
   PowerState selectState;
   final MQTTClientWrapper mqttClientWrapper = new MQTTClientWrapper();
 
-  String deviceMAC = "";
+  String deviceDetails;
   bool pwrState;
 
   String selectedPwrSupply;
 
+  bool addBtnClicked = false;
+  bool renameBtnClicked = false;
+  bool removeBtnClicked = false;
+
+  
   setupDevice(deviceName) {
     mqttClientWrapper.prepareMqttClient(deviceName);
   }
@@ -43,7 +43,7 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
   Future<bool> addValidateMAC() async {
     try {
       DocumentSnapshot documentSnapshot =
-          await issuedPwrSupplyRef.document(deviceMAC).get();
+          await issuedPwrSupplyRef.document(deviceDetails).get();
 
       if (documentSnapshot.exists) {
         return Future.value(true);
@@ -59,7 +59,7 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
   Future<bool> removeValidateMAC() async {
     try {
       DocumentSnapshot documentSnapshot =
-          await powerSupplyRef.document(deviceMAC).get();
+          await powerSupplyRef.document(deviceDetails).get();
 
       if (documentSnapshot.exists) {
         return Future.value(true);
@@ -73,16 +73,21 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
   }
 
   addDevice() async {
-    final form = macKey.currentState;
+        setState(() {
+      addBtnClicked = true;
+      renameBtnClicked = false;
+      removeBtnClicked = false;
+    });
+    final form = powerFormKey.currentState;
     form.save();
     if (form.validate()) {
       if (await addValidateMAC()) {
         setState(() {
           showToast(message: "Device added successfully");
-          powerSupplyRef.document(deviceMAC).setData({
+          powerSupplyRef.document(deviceDetails).setData({
             // "isVeryfied": true,
             "activeStatus": false,
-            // "deviceMAC": deviceMAC,
+            "unitName": deviceDetails,
             // "customerID": currentUserWithInfo?.id,
             // "timestamp": timestamp,
           });
@@ -96,14 +101,19 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
   }
 
   removeDevice() async {
-    final form = macKey.currentState;
+        setState(() {
+      addBtnClicked = false;
+      renameBtnClicked = false;
+      removeBtnClicked = true;
+    });
+    final form = powerFormKey.currentState;
     form.save();
     if (form.validate()) {
       if (await removeValidateMAC()) {
         setState(() {
           // setupDevice();
           showToast(message: "Device deleted successfully");
-          powerSupplyRef.document(selectedPwrSupply).delete();
+          powerSupplyRef.document(deviceDetails).delete();
         });
       } else {
         showToast(message: "Please check the Serial number again");
@@ -112,51 +122,85 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
       showToast(message: "Please check the Serial number again");
     }
   }
-
+ renameDevice() async {
+    setState(() {
+      addBtnClicked = false;
+      renameBtnClicked = true;
+      removeBtnClicked = false;
+    });
+    final form = powerFormKey.currentState;
+    form.save();
+    if (form.validate()) {
+      if (selectedPwrSupply != null) {
+        setState(() {
+          //should happen afer firebase - todo check connection
+          showToast(message: "Device renamed successfully");
+          powerSupplyRef.document(selectedPwrSupply).updateData({
+            "unitName": deviceDetails
+          });
+        });
+      } else {
+        showToast(message: "Please Choose a device from the dropdown menu");
+      }
+    } else {
+      showToast(message: "Please check the Device name again");
+    }
+  }
   editDevices() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Form(
-          key: macKey,
+          key: powerFormKey,
           autovalidateMode: AutovalidateMode.always,
           child: Padding(
-            padding: EdgeInsets.fromLTRB(16.0, 40.0, 16.0, 0.0),
+            padding: EdgeInsets.fromLTRB(16.0, 20.0, 16.0, 0.0),
             child: TextFormField(
-              validator: validateDeviceSerialNo,
-              onSaved: (val) => deviceMAC = val,
+              validator: (val) {
+                if (val.trim().length != 17 &&
+                    (addBtnClicked || removeBtnClicked)) {
+                  return "Enter a valid Serial Number";
+                } else if (val.trim().length == 0 && renameBtnClicked) {
+                  return "Enter a valid Device Name";
+                } else {
+                  return null;
+                }
+              },
+              onSaved: (val) => deviceDetails = val,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: "Enter Device Serial Number",
+                labelText: "Enter Device Details",
                 labelStyle: TextStyle(fontSize: 15.0),
-                hintText: "serial number",
+                hintText: "for add/remove use Serial Number",
               ),
             ),
           ),
         ),
+        SizedBox(height: 10.0),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            Padding(
-              padding: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0.0),
-              child: RoundedButton(
-                title: 'Delete Device',
-                minWidth: 75.0,
-                height: 25.0,
-                color: Colors.redAccent,
-                onPressed: removeDevice,
-              ),
+            RoundedButton(
+              title: 'Add',
+              minWidth: 75.0,
+              height: 25.0,
+              color: Theme.of(context).accentColor,
+              onPressed: addDevice,
             ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0.0),
-              child: RoundedButton(
-                title: 'Add New Device',
-                minWidth: 75.0,
-                height: 25.0,
-                color: Theme.of(context).accentColor,
-                onPressed: addDevice,
-              ),
+            RoundedButton(
+              title: 'Rename',
+              minWidth: 75.0,
+              height: 25.0,
+              color: Colors.blueAccent,
+              onPressed: renameDevice,
+            ),
+            RoundedButton(
+              title: 'Delete',
+              minWidth: 75.0,
+              height: 25.0,
+              color: Colors.redAccent,
+              onPressed: removeDevice,
             ),
           ],
         ),
@@ -189,7 +233,7 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
                       pwrSupplies.add(
                         DropdownMenuItem(
                           child: Text(
-                            snap.documentID,
+                            snap.data["unitName"],
                             style: TextStyle(color: Colors.blue),
                           ),
                           value: "${snap.documentID}",
@@ -211,7 +255,7 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
                           onChanged: (pwrSupplyName) {
                             final snackBar = SnackBar(
                               content: Text(
-                                'Selected Power Supply is $pwrSupplyName',
+                                'Power Supply Serial Number is $pwrSupplyName',
                                 style: TextStyle(color: Colors.blue),
                               ),
                             );
@@ -250,6 +294,8 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
                   }
                 },
               ),
+              editDevices(),
+
               SizedBox(
                 height: 40.0,
               ),
@@ -285,7 +331,6 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
                       : 'Screen currently OFF',
                 ),
               ),
-              editDevices(),
             ],
           ),
         ],
