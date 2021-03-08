@@ -29,12 +29,12 @@ class ValidateEntries {
     }
   }
 
-  String validateDeviceSerialNo(String val) {
-    if ((0 <= val.trim().length && 17 > val.trim().length) ||
-        val.trim().length > 17) {
-      return "Enter a valid Serial";
-    } else {
-      return null;
-    }
-  }
+  // String validateDeviceSerialNo(String val) {
+  //   if ((0 <= val.trim().length && 17 > val.trim().length) ||
+  //       val.trim().length > 17) {
+  //     return "Enter a valid Serial";
+  //   } else {
+  //     return null;
+  //   }
+  // }
 }
