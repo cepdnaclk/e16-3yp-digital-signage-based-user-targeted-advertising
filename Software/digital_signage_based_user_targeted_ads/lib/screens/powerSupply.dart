@@ -20,13 +20,12 @@ enum PowerState {
 }
 
 class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
-
   final powerFormKey = GlobalKey<FormState>();
 
   PowerState selectState;
   final MQTTClientWrapper mqttClientWrapper = new MQTTClientWrapper();
 
-  String deviceDetails;
+  String deviceDetails ="";
   bool pwrState;
 
   String selectedPwrSupply;
@@ -35,7 +34,6 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
   bool renameBtnClicked = false;
   bool removeBtnClicked = false;
 
-  
   setupDevice(deviceName) {
     mqttClientWrapper.prepareMqttClient(deviceName);
   }
@@ -73,7 +71,7 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
   }
 
   addDevice() async {
-        setState(() {
+    setState(() {
       addBtnClicked = true;
       renameBtnClicked = false;
       removeBtnClicked = false;
@@ -101,7 +99,7 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
   }
 
   removeDevice() async {
-        setState(() {
+    setState(() {
       addBtnClicked = false;
       renameBtnClicked = false;
       removeBtnClicked = true;
@@ -122,7 +120,8 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
       showToast(message: "Please check the Serial number again");
     }
   }
- renameDevice() async {
+
+  renameDevice() async {
     setState(() {
       addBtnClicked = false;
       renameBtnClicked = true;
@@ -135,9 +134,9 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
         setState(() {
           //should happen afer firebase - todo check connection
           showToast(message: "Device renamed successfully");
-          powerSupplyRef.document(selectedPwrSupply).updateData({
-            "unitName": deviceDetails
-          });
+          powerSupplyRef
+              .document(selectedPwrSupply)
+              .updateData({"unitName": deviceDetails});
         });
       } else {
         showToast(message: "Please Choose a device from the dropdown menu");
@@ -146,6 +145,7 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
       showToast(message: "Please check the Device name again");
     }
   }
+
   editDevices() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -306,7 +306,7 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
                       selectState = PowerState.turnOn;
                     });
                     mqttClientWrapper.publishMessage("1");
-                    powerSupplyRef.document(selectedPwrSupply).setData({
+                    powerSupplyRef.document(selectedPwrSupply).updateData({
                       "activeStatus": true,
                     });
                     pwrState = true;
