@@ -21,6 +21,7 @@ enum UserTargetState {
 }
 
 class _UsertargetState extends State<Usertarget> {
+  TextEditingController clearController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   String deviceDetails = "";
   bool userTargettingState;
@@ -118,6 +119,8 @@ class _UsertargetState extends State<Usertarget> {
     if (form.validate()) {
       if (await addValidateMAC()) {
         setState(() {
+          clearController.clear();
+          formKey.currentState.reset();
           showToast(message: "Device added successfully");
           signageUnitRef.document(deviceDetails).setData({
             "isUserTargeting": false,
@@ -145,7 +148,8 @@ class _UsertargetState extends State<Usertarget> {
     if (form.validate()) {
       if (await removeValidateMAC()) {
         setState(() {
-          // setupDevice();
+          clearController.clear();
+          formKey.currentState.reset();
           showToast(message: "Device deleted successfully");
           signageUnitRef.document(deviceDetails).delete();
         });
@@ -170,9 +174,11 @@ class _UsertargetState extends State<Usertarget> {
         setState(() {
           //should happen afer firebase - todo check connection
           showToast(message: "Device renamed successfully");
-          signageUnitRef.document(selectedSignageUnit).updateData({
-            "unitName": deviceDetails
-          });
+          signageUnitRef
+              .document(selectedSignageUnit)
+              .updateData({"unitName": deviceDetails});
+          clearController.clear();
+          formKey.currentState.reset();
         });
       } else {
         showToast(message: "Please Choose a device from the dropdown menu");
@@ -193,6 +199,7 @@ class _UsertargetState extends State<Usertarget> {
           child: Padding(
             padding: EdgeInsets.fromLTRB(16.0, 20.0, 16.0, 0.0),
             child: TextFormField(
+              controller: clearController,
               validator: (val) {
                 if (val.trim().length != 17 &&
                     (addBtnClicked || removeBtnClicked)) {

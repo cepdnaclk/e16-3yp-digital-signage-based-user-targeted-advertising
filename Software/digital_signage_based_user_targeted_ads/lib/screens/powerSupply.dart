@@ -20,12 +20,13 @@ enum PowerState {
 }
 
 class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
+  TextEditingController clearController = TextEditingController();
   final powerFormKey = GlobalKey<FormState>();
 
   PowerState selectState;
   final MQTTClientWrapper mqttClientWrapper = new MQTTClientWrapper();
 
-  String deviceDetails ="";
+  String deviceDetails = "";
   bool pwrState;
 
   String selectedPwrSupply;
@@ -81,6 +82,8 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
     if (form.validate()) {
       if (await addValidateMAC()) {
         setState(() {
+          clearController.clear();
+          powerFormKey.currentState.reset();
           showToast(message: "Device added successfully");
           powerSupplyRef.document(deviceDetails).setData({
             // "isVeryfied": true,
@@ -109,7 +112,8 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
     if (form.validate()) {
       if (await removeValidateMAC()) {
         setState(() {
-          // setupDevice();
+          clearController.clear();
+          powerFormKey.currentState.reset();
           showToast(message: "Device deleted successfully");
           powerSupplyRef.document(deviceDetails).delete();
         });
@@ -133,6 +137,8 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
       if (selectedPwrSupply != null) {
         setState(() {
           //should happen afer firebase - todo check connection
+          clearController.clear();
+          powerFormKey.currentState.reset();
           showToast(message: "Device renamed successfully");
           powerSupplyRef
               .document(selectedPwrSupply)
@@ -157,6 +163,7 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
           child: Padding(
             padding: EdgeInsets.fromLTRB(16.0, 20.0, 16.0, 0.0),
             child: TextFormField(
+              controller: clearController,
               validator: (val) {
                 if (val.trim().length != 17 &&
                     (addBtnClicked || removeBtnClicked)) {
@@ -295,7 +302,6 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
                 },
               ),
               editDevices(),
-
               SizedBox(
                 height: 40.0,
               ),
