@@ -6,7 +6,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:project_api/screens/create_account.dart';
 import 'package:project_api/screens/powerSupply.dart';
-import 'package:project_api/screens/smartpower.dart';
 import 'package:project_api/screens/usertarget.dart';
 import 'package:project_api/screens/profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
