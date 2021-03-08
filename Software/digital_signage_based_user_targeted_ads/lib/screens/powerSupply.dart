@@ -20,13 +20,13 @@ enum PowerState {
 }
 
 class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
-
+  TextEditingController clearController = TextEditingController();
   final powerFormKey = GlobalKey<FormState>();
 
   PowerState selectState;
   final MQTTClientWrapper mqttClientWrapper = new MQTTClientWrapper();
 
-  String deviceDetails;
+  String deviceDetails = "";
   bool pwrState;
 
   String selectedPwrSupply;
@@ -35,7 +35,6 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
   bool renameBtnClicked = false;
   bool removeBtnClicked = false;
 
-  
   setupDevice(deviceName) {
     mqttClientWrapper.prepareMqttClient(deviceName);
   }
@@ -73,7 +72,7 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
   }
 
   addDevice() async {
-        setState(() {
+    setState(() {
       addBtnClicked = true;
       renameBtnClicked = false;
       removeBtnClicked = false;
@@ -83,6 +82,8 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
     if (form.validate()) {
       if (await addValidateMAC()) {
         setState(() {
+          clearController.clear();
+          powerFormKey.currentState.reset();
           showToast(message: "Device added successfully");
           powerSupplyRef.document(deviceDetails).setData({
             // "isVeryfied": true,
@@ -101,7 +102,7 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
   }
 
   removeDevice() async {
-        setState(() {
+    setState(() {
       addBtnClicked = false;
       renameBtnClicked = false;
       removeBtnClicked = true;
@@ -111,7 +112,8 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
     if (form.validate()) {
       if (await removeValidateMAC()) {
         setState(() {
-          // setupDevice();
+          clearController.clear();
+          powerFormKey.currentState.reset();
           showToast(message: "Device deleted successfully");
           powerSupplyRef.document(deviceDetails).delete();
         });
@@ -122,7 +124,8 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
       showToast(message: "Please check the Serial number again");
     }
   }
- renameDevice() async {
+
+  renameDevice() async {
     setState(() {
       addBtnClicked = false;
       renameBtnClicked = true;
@@ -134,10 +137,12 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
       if (selectedPwrSupply != null) {
         setState(() {
           //should happen afer firebase - todo check connection
+          clearController.clear();
+          powerFormKey.currentState.reset();
           showToast(message: "Device renamed successfully");
-          powerSupplyRef.document(selectedPwrSupply).updateData({
-            "unitName": deviceDetails
-          });
+          powerSupplyRef
+              .document(selectedPwrSupply)
+              .updateData({"unitName": deviceDetails});
         });
       } else {
         showToast(message: "Please Choose a device from the dropdown menu");
@@ -146,6 +151,7 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
       showToast(message: "Please check the Device name again");
     }
   }
+
   editDevices() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -157,6 +163,7 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
           child: Padding(
             padding: EdgeInsets.fromLTRB(16.0, 20.0, 16.0, 0.0),
             child: TextFormField(
+              controller: clearController,
               validator: (val) {
                 if (val.trim().length != 17 &&
                     (addBtnClicked || removeBtnClicked)) {
@@ -295,7 +302,6 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
                 },
               ),
               editDevices(),
-
               SizedBox(
                 height: 40.0,
               ),
@@ -306,7 +312,7 @@ class _PowerSupplyState extends State<PowerSupply> with ValidateEntries {
                       selectState = PowerState.turnOn;
                     });
                     mqttClientWrapper.publishMessage("1");
-                    powerSupplyRef.document(selectedPwrSupply).setData({
+                    powerSupplyRef.document(selectedPwrSupply).updateData({
                       "activeStatus": true,
                     });
                     pwrState = true;
