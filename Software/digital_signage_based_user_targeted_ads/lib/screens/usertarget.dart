@@ -21,8 +21,9 @@ enum UserTargetState {
 }
 
 class _UsertargetState extends State<Usertarget> {
-  final rpiKey = GlobalKey<FormState>();
-  String deviceMAC = "";
+  TextEditingController clearController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  String deviceDetails = "";
   bool userTargettingState;
   UserTargetState selectState;
 
@@ -35,6 +36,10 @@ class _UsertargetState extends State<Usertarget> {
   int ageActiveIndex = 5;
   String currentURL;
   String currentPreview;
+
+  bool addBtnClicked = false;
+  bool renameBtnClicked = false;
+  bool removeBtnClicked = false;
 
   _launchURL(int index1, int index2) async {
     currentURL = Adlist().selectAd(index1, index2);
@@ -74,7 +79,7 @@ class _UsertargetState extends State<Usertarget> {
   Future<bool> addValidateMAC() async {
     try {
       DocumentSnapshot documentSnapshot =
-          await issuedSignageRef.document(deviceMAC).get();
+          await issuedSignageRef.document(deviceDetails).get();
 
       if (documentSnapshot.exists) {
         return Future.value(true);
@@ -90,7 +95,7 @@ class _UsertargetState extends State<Usertarget> {
   Future<bool> removeValidateMAC() async {
     try {
       DocumentSnapshot documentSnapshot =
-          await signageUnitRef.document(deviceMAC).get();
+          await signageUnitRef.document(deviceDetails).get();
 
       if (documentSnapshot.exists) {
         return Future.value(true);
@@ -104,36 +109,25 @@ class _UsertargetState extends State<Usertarget> {
   }
 
   addDevice() async {
-    final form = rpiKey.currentState;
+    setState(() {
+      addBtnClicked = true;
+      renameBtnClicked = false;
+      removeBtnClicked = false;
+    });
+    final form = formKey.currentState;
     form.save();
     if (form.validate()) {
       if (await addValidateMAC()) {
         setState(() {
+          clearController.clear();
+          formKey.currentState.reset();
           showToast(message: "Device added successfully");
-          signageUnitRef.document(deviceMAC).setData({
+          signageUnitRef.document(deviceDetails).setData({
             "isUserTargeting": false,
-            // "deviceMAC": deviceMAC,
             "customerID": currentUserWithInfo?.id,
             "timestamp": timestamp,
+            "unitName": deviceDetails
           });
-        });
-      } else {
-        showToast(message: "Please check the Serial number againy");
-      }
-    } else {
-      showToast(message: "Please check the Serial number again");
-    }
-  }
-
-  removeDevice() async {
-    final form = rpiKey.currentState;
-    form.save();
-    if (form.validate()) {
-      if (await removeValidateMAC()) {
-        setState(() {
-          // setupDevice();
-          showToast(message: "Device deleted successfully");
-          signageUnitRef.document(selectedSignageUnit).delete();
         });
       } else {
         showToast(message: "Please check the Serial number again");
@@ -143,57 +137,113 @@ class _UsertargetState extends State<Usertarget> {
     }
   }
 
+  removeDevice() async {
+    setState(() {
+      addBtnClicked = false;
+      renameBtnClicked = false;
+      removeBtnClicked = true;
+    });
+    final form = formKey.currentState;
+    form.save();
+    if (form.validate()) {
+      if (await removeValidateMAC()) {
+        setState(() {
+          clearController.clear();
+          formKey.currentState.reset();
+          showToast(message: "Device deleted successfully");
+          signageUnitRef.document(deviceDetails).delete();
+        });
+      } else {
+        showToast(message: "Please check the Serial number again");
+      }
+    } else {
+      showToast(message: "Please check the Serial number again");
+    }
+  }
+
+  renameDevice() async {
+    setState(() {
+      addBtnClicked = false;
+      renameBtnClicked = true;
+      removeBtnClicked = false;
+    });
+    final form = formKey.currentState;
+    form.save();
+    if (form.validate()) {
+      if (selectedSignageUnit != null) {
+        setState(() {
+          //should happen afer firebase - todo check connection
+          showToast(message: "Device renamed successfully");
+          signageUnitRef
+              .document(selectedSignageUnit)
+              .updateData({"unitName": deviceDetails});
+          clearController.clear();
+          formKey.currentState.reset();
+        });
+      } else {
+        showToast(message: "Please Choose a device from the dropdown menu");
+      }
+    } else {
+      showToast(message: "Please check the Device name again");
+    }
+  }
+
   editDevices() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Form(
-          key: rpiKey,
+          key: formKey,
           autovalidateMode: AutovalidateMode.always,
           child: Padding(
             padding: EdgeInsets.fromLTRB(16.0, 20.0, 16.0, 0.0),
             child: TextFormField(
+              controller: clearController,
               validator: (val) {
-                if ((0 <= val.trim().length && 4 > val.trim().length) ||
-                    val.trim().length > 4) {
-                  return "Enter a valid Serial";
+                if (val.trim().length != 17 &&
+                    (addBtnClicked || removeBtnClicked)) {
+                  return "Enter a valid Serial Number";
+                } else if (val.trim().length == 0 && renameBtnClicked) {
+                  return "Enter a valid Device Name";
                 } else {
                   return null;
                 }
               },
-              onSaved: (val) => deviceMAC = val,
+              onSaved: (val) => deviceDetails = val,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: "Enter Device Serial Number",
+                labelText: "Enter Device Details",
                 labelStyle: TextStyle(fontSize: 15.0),
-                hintText: "serial number",
+                hintText: "for add/remove use Serial Number",
               ),
             ),
           ),
         ),
+        SizedBox(height: 10.0),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            Padding(
-              padding: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0.0),
-              child: RoundedButton(
-                title: 'Delete Device',
-                minWidth: 75.0,
-                height: 25.0,
-                color: Colors.redAccent,
-                onPressed: removeDevice,
-              ),
+            RoundedButton(
+              title: 'Add',
+              minWidth: 75.0,
+              height: 25.0,
+              color: Theme.of(context).accentColor,
+              onPressed: addDevice,
             ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 0.0),
-              child: RoundedButton(
-                title: 'Add New Device',
-                minWidth: 75.0,
-                height: 25.0,
-                color: Theme.of(context).accentColor,
-                onPressed: addDevice,
-              ),
+            RoundedButton(
+              title: 'Rename',
+              minWidth: 75.0,
+              height: 25.0,
+              color: Colors.blueAccent,
+              onPressed: renameDevice,
+            ),
+            RoundedButton(
+              title: 'Delete',
+              minWidth: 75.0,
+              height: 25.0,
+              color: Colors.redAccent,
+              onPressed: removeDevice,
             ),
           ],
         ),
@@ -226,7 +276,7 @@ class _UsertargetState extends State<Usertarget> {
                       pwrSupplies.add(
                         DropdownMenuItem(
                           child: Text(
-                            snap.documentID,
+                            snap.data["unitName"],
                             style: TextStyle(color: Colors.blue),
                           ),
                           value: "${snap.documentID}",
@@ -248,7 +298,7 @@ class _UsertargetState extends State<Usertarget> {
                           onChanged: (signageUnitName) {
                             final snackBar = SnackBar(
                               content: Text(
-                                'Selected signage unit is $signageUnitName',
+                                'Signage unit serial is $signageUnitName',
                                 style: TextStyle(color: Colors.blue),
                               ),
                             );
@@ -499,10 +549,10 @@ class _UsertargetState extends State<Usertarget> {
                               ),
                               ReusableCard(
                                 onPress: () {
-                                  if(selectedSignageUnit == null){
-                                    showToast(message:"Please select a device");
-                                  }
-                                  else if (userTargettingState == false) {
+                                  if (selectedSignageUnit == null) {
+                                    showToast(
+                                        message: "Please select a device");
+                                  } else if (userTargettingState == false) {
                                     setState(() {
                                       selectState = UserTargetState.turnOn;
                                     });
