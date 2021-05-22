@@ -2,22 +2,6 @@
 
 [**Click here to visit our website**](https://cepdnaclk.github.io/e16-3yp-digital-signage-based-user-targeted-advertising/)
 
-#### Group Members : 
-  * Dhanushka S.M.V. &nbsp;&nbsp;&nbsp; E/16/083 &nbsp;&nbsp;&nbsp;e16083@eng.pdn.ac.lk
-  * Lakmali B.L.S. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; E/16/200  &nbsp;&nbsp;&nbsp;&nbsp;e16200@eng.pdn.ac.lk
-  * Thisanke M.K.H.   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; E/16/368 &nbsp;&nbsp;&nbsp;&nbsp;e16368@eng.pdn.ac.lk
-                           
-<div id="Members" >
-    <div class="inline-block">
-        <img src ="https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising/blob/main/Images/Member1.jpg" align="left" width="250" height="250">
-    </div>
-    <div class="inline-block">
-        <img src ="https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising/blob/main/Images/Member2.jpg" align="left" width="250" height="250">
-    </div>
-    <div class="inline-block">
-       <img src ="https://github.com/cepdnaclk/e16-3yp-digital-signage-based-user-targeted-advertising/blob/main/Images/Member3.jpg" alt= " "  width="230" height="250">
-    </div>
-</div>
 
 ## INTRODUCTION
 
