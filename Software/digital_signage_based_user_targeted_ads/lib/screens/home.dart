@@ -44,7 +44,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   // final _scaffoldKey = GlobalKey<ScaffoldState>();
   bool showSpinner = false;
-  bool isAuth = true;
+  bool isAuth = false
 
   TextEditingController female_25to32_Controller = TextEditingController();
   String female_25to32 = 'unavailable';
