@@ -64,7 +64,7 @@
                         <p class="text-white-50 mb-3 text-justify">To overcome these kind of issues our proposed solution consists of an upgraded version with additional hardware/software which can do User Targeted Advertising. Here our aim is while showing content that changes dynamically, when a particular crowd (male/female/children) is identified in front of the screens it will change the current content flow and show some relevant,interesting advertisement for the targeted audience that might catch their attention.</p>
                         <p class="text-white-50 mb-4 text-justify"> The buyer(shop owner) of the digital signage unit can upload their advertisements using the provided user authenticated web application or the mobile application. Also add some specific advertisements categorized by gender and age group. When a user in front is detected specific content will be visible to the targeted audience.</p>
                         <!--<a class="btn btn-light btn-xl js-scroll-trigger" href="#design">Find further!</a>-->
-                        <a class="btn btn-primary btn-xl js-scroll-trigger" href="https://www.youtube.com/watch?v=sX5OLr6ZVRk" target="_blank">Watch Product Video</a>
+                        <a class="btn btn-primary btn-xl js-scroll-trigger" href="https://www.youtube.com/watch?v=YRVstIBPApU&ab_channel=VirajDanushka" target="_blank">Watch Product Video</a>
                     </div>
                 </div>
             </div>
@@ -85,10 +85,10 @@
                         <div class="col-lg-12 text-left text-muted mb-5">
                             <ul style="line-height: 200%;">
                                 <li>The digital signage control unit consists of raspberry pi 3 which acts as the heart of the system.</li>
-                                <li>The Digital display is connected to raspberry pi using HDMI and the user detecting and Identifying unit is attached to the digital display. This user detecting and Identifying unit mainly consists of Raspberry PI camera module and distance sensor module.</li>
-                                <li>Firebase is used as the back-end.</li>
-                                <li>Flutter is used as the web/mobile app framework for the front-end development. Dart is used as the programming language where the same code base can be used to develop both android and ios applications.</li>
-                                <li>As an additional improvement, a smart power supply unit which can control the digital screen on/off through the web application will be implemented.</li>
+                                <li>The digital display is connected to raspberry pi using HDMI and the user detecting and identifying unit is attached to the digital display. This user detecting and identifying unit mainly consists of a Raspberry Pi camera module</li>
+                                <li>Firebase is used as the back-end and cloud firestore NoSQL database to store,sync and query data.</li>
+                                <li>Flutter is used as the mobile app framework for the front-end development. Dart is used as the programming language where the same code base can be used to develop both android and ios applications.</li>
+                                <li>As an additional improvement, a smart power supply unit which can control the digital screen on/off through the mobile application will be implemented.</li>
                             </ul>    
                         </div> 
                     </div>
@@ -213,11 +213,12 @@
 				<hr class="divider my-4" />
 				<div class="col-lg-12 text-left text-white-50 mb-5">
 				    <ul style="line-height: 200%;">
-					<li>User is supposed to upload the advertisements using the mobile app or web app.</li>
-					<li>Those advertisements are uploaded into SD card in RPI board through the Web server.</li>
-					<li>Image of the person who is infront of the screen is captured by the camera module and given to RPI board.</li>
-					<li>That image is processed with trained data models and gender and age groups of the person is caculated.</li>
-					<li>According to the results, best advertisement is shown to the user.</li>
+                        <li>User is supposed to upload the advertisements using the mobile app.</li>
+                        <li>Those advertisements are uploaded into the selected google slides page according to age and gender. Default advertisement lists are uploaded to the RPi SD card.</li>
+                        <li>Image of the person who is infront of the screen is captured by the camera module and processed in the RPi to extract the face by running haar-cascade classifiers </li>
+                        <li>That image is processed with pre trained deep learning model to predict the gender and age group of the person.</li>
+                        <li>The age,gender details are updated in firestore database in realtime and signage control unit listens and query these new data.</li>
+                        <li>According to the received results, matching google slides presentation is selected and displayed on the digital screen.</li>
 				    </ul>    
 				</div> 
 			</div>
@@ -237,11 +238,11 @@
 					<hr class="divider my-4" />
 					<div class="col-lg-12 text-left text-black-50 mb-5">
 					    <ul style="line-height: 200%;">
-						<li>User can upload advertisements using the mobile app.</li>
-						<li>Advertisements are uploaded as google slides which are stored inside google cloud. Because of using google slides, we could minimize the cloud storage of our system. And user can easily create and edit advertisement using google slides.</li>
-						<li>User information is stored inside the Firebase (in Cloud Firestore).</li>
-						<li>Detected user age and gender predictions are realtime updated in firebase.</li>
-						<li>Screenly API (in RPI) fetch the correct advertisement from cloud and display in the screen.</li>
+                            <li>User information and shop details are stored in Firebase(in Cloud Firestore database).</li>
+                            <li>Users can upload advertisements using the mobile app after login into their account.</li>
+                            <li>Advertisements are uploaded as google slides which are stored inside google cloud. Because of using google slides, we could minimize the cloud storage of our system. And users can easily create and edit advertisements using google slides.</li>
+                            <li>Detected persons age and gender prediction values are realtime updated in firebase firestore.</li>
+                            <li>Screenly API (in RPi) fetches the matching(to age and gender) google slides presentation link and display the advertisements in the screen.</li>
 					    </ul>    
 					</div> 
 				</div>
@@ -336,12 +337,12 @@
                             <div class="col-lg-12 text-left text-muted mb-5">
                                 <ul style="line-height: 200%;">
                                 <h4 style="color: orange">Components and Procedure</h4>
-                                <li>MQTT protocol is used to design the smart power supply unit.</li>
+                                <li>MQTT messaging protocol is used to design the smart power supply unit.</li>
                                 <li>Mobile app (MQTT client) publishes user given messages (ON or OFF) to a unique topic for that power supply unit.</li>
                                 <li>Mac address of the Node MCU is used as the topic to make the topic unique for that power supply unit.</li>
                                 <li>Node MCU(ESP8266) subscribes to the certain topic and recieves user given message through the broker.</li>
-                                <li>EMQX broker was used in our implementation.</li>
-                                <li>After recieving the user given message, it is given to 5V relay module by the NodeMCU. According to the message, screen is going to turn on or turn off.</li>
+                                <li>EMQX broker is used in our implementation.</li>
+                                <li>After recieving the user given message, a signal is given to 5V relay module by the NodeMCU. According to the message,the relay triggers and screen will turn on or turn off.</li>
                                 </ul>    
                             </div> 
                     </div>
