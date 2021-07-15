@@ -1,0 +1,42 @@
+{
+    "title": "Digital Signage Based User Targeted Advertising",
+    "team": [
+        {
+            "name": "Dhanushka S.M.V.",
+            "email": "e16083@eng.pdn.ac.lk",
+            "eNumber": "E/16/083",
+            "github_profile":"https://github.com/viradhanus",
+            "linkedin_profile":"https://www.linkedin.com/in/viradhanus/"
+        },
+        {
+            "name": "Thisanke M.K.H.",
+            "email": "e16368@eng.pdn.ac.lk",
+            "eNumber": "E/16/368",
+            "github_profile":"https://github.com/hansthisanke",
+            "linkedin_profile":"https://www.linkedin.com/in/hans-thisanke/"
+        },
+        {
+            "name": "Sumudu Liyanage",
+            "email": "e16200l@eng.pdn.ac.lk",
+            "eNumber": "E/16/200",
+            "github_profile":"https://github.com/sumuduliyanage",
+            "linkedin_profile":"https://www.linkedin.com/in/sumudu-liyanage"
+        }
+    ],
+    "supervisors": [
+        {
+            "name": "Dr. Isuru Nawinne",
+            "email": "isurunawinne@eng.pdn.ac.lk",
+            "linkedin_profile":"https://www.linkedin.com/in/isuru-nawinne-73302833/?originalSubdomain=lk",
+            "researchgate_profile":"https://www.researchgate.net/profile/Isuru-Nawinne"
+        },
+        {
+            "name": "Upul Jayasinghe",
+            "email": "upuljm@eng.pdn.ac.lk",
+            "linkedin_profile":"https://www.linkedin.com/in/upuljm/",
+            "researchgate_profile":"https://www.researchgate.net/profile/Upul-Jayasinghe"
+        }
+    ],
+    "tags": ["Web", "Embedded Systems"]
+}
+
