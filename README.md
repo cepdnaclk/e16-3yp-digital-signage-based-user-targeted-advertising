@@ -102,8 +102,6 @@ Multiple tests have driven to ensure the accurate functionality of the product. 
 
 >Dr. Isuru Nawinne
 
->Mr. Ziyan Maraikar
-
 ##### Links:
 > [Department of Computer Engineering Website](http://www.ce.pdn.ac.lk/) 
 
